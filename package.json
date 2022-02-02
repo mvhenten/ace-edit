@@ -1,0 +1,42 @@
+{
+  "name": "aceite",
+  "version": "1.0.0",
+  "description": "Extra Virgin",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "server": "webpack serve --mode development --config webpack.server.js",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ischen/aceite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ischen/aceite/issues"
+  },
+  "homepage": "https://github.com/ischen/aceite#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "ace-builds": "^1.4.14",
+    "css-loader": "^6.5.1",
+    "eslint": "^8.8.0",
+    "events": "^3.3.0",
+    "file-loader": "^6.2.0",
+    "node-sass": "^7.0.1",
+    "prettier": "2.5.1",
+    "sass-loader": "^12.4.0",
+    "serve": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.3",
+    "webpack-loader": "^0.0.1"
+  }
+}
