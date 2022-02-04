@@ -6,6 +6,46 @@
         Test
     </title>
     <style type="text/css" media="screen">
+        .app-layout {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            border: 6px solid pink;
+        }
+
+        .slot-notifications {
+            height: 100px;
+            border: 1px solid orange;
+        }
+
+        .app-layout-center {
+            flex: auto;
+            display: flex;
+            flex-direction: row;
+            border: 5px solid purple;
+        }
+
+        .slot-filetree {
+            border: 1px solid green;
+            flex-basis: 20%;
+        }
+
+        .slot-editor {
+            border: 1px solid red;
+            position: relative;
+            flex: auto;
+        }
+
+        .slot-preferences {
+            border: 1px solid blue;
+            flex-basis: 20%;
+        }
+
+
         #editor { 
             position: absolute;
             top: 0;
@@ -19,7 +59,7 @@
 
 <!-- scripts -->
 
-<pre id="editor">content</pre>
+
 <script src="./index.js"></script>
 </body>
 </html>
