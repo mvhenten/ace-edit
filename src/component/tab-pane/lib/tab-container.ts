@@ -133,8 +133,6 @@ export class TabContainer extends HTMLElement {
                 return;
             }
 
-            console.log("Found a body for tab", panel);
-
             tab.setAttribute("aria-controls", panel.id);
             panel.setAttribute("aria-labelledby", tab.id);
         });
@@ -185,7 +183,7 @@ export class TabContainer extends HTMLElement {
         // Use `findIndex()` to find the index of the currently
         // selected element and subtracts one to get the index of the previous
         // element.
-        let newIdx = tabs.findIndex((tab) => tab.selected) - 1;
+        const newIdx = tabs.findIndex((tab) => tab.selected) - 1;
         // Add `tabs.length` to make sure the index is a positive number
         // and get the modulus to wrap around if necessary.
         return tabs[(newIdx + tabs.length) % tabs.length];
@@ -213,7 +211,7 @@ export class TabContainer extends HTMLElement {
      */
     _nextTab() {
         const tabs = this._allTabs();
-        let newIdx = tabs.findIndex((tab) => tab.selected) + 1;
+        const newIdx = tabs.findIndex((tab) => tab.selected) + 1;
         return tabs[newIdx % tabs.length];
     }
 

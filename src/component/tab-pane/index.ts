@@ -18,7 +18,7 @@ import { TabBody } from "./lib/tab-body";
 import { TabHeader } from "./lib/tab-header";
 import { TabContainer } from "./lib/tab-container";
 
-// Your .ts file, e.g. index.ts
+/* eslint-disable */
 declare module "preact/src/jsx" {
     namespace JSXInternal {
         import HTMLAttributes = JSXInternal.HTMLAttributes;

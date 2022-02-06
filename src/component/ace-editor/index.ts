@@ -1,4 +1,4 @@
-const ace = require("ace-builds/src-noconflict/ace");
+import ace = require("ace-builds/src-noconflict/ace");
 require("ace-builds/webpack-resolver");
 
 import { AceEditorManager } from "./interfaces";

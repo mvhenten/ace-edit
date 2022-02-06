@@ -55,7 +55,9 @@ class FileSystemMock extends EventEmitter implements FileSystem {
         super();
     }
 
-    open(_fileHandle: any): void {}
+    open(_fileHandle: any): void {
+        console.error("FileSystem.open called on mock");
+    }
 
     getFileTree() {
         return JSON.parse(JSON.stringify(fakeFileTree));

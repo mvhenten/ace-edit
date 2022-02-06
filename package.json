@@ -9,7 +9,9 @@
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "fix": "prettier -w src/",
-    "test": "npm run test:prettier",
+    "test": "npm run test:prettier && npm run test:eslint && npm run test:unit",
+    "test:eslint": "eslint src",
+    "test:unit": "ava src/",
     "test:prettier": "prettier -c src/"
   },
   "repository": {
@@ -21,6 +23,14 @@
   "bugs": {
     "url": "https://github.com/ischen/aceite/issues"
   },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 4,
@@ -28,12 +38,14 @@
   },
   "homepage": "https://github.com/ischen/aceite#readme",
   "devDependencies": {
+    "@ava/typescript": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "ace-builds": "^1.4.14",
     "ava": "^4.0.1",
     "css-loader": "^6.5.1",
     "eslint": "^8.8.0",
+    "eslint-plugin-react": "^7.28.0",
     "events": "^3.3.0",
     "file-loader": "^6.2.0",
     "htm": "^3.1.0",
@@ -44,6 +56,7 @@
     "serve": "^13.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
     "ts-sinon": "^2.0.2",
     "typescript": "^4.5.5",
     "webpack": "^5.68.0",

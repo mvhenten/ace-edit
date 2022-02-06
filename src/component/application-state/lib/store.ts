@@ -1,11 +1,13 @@
 type State = Record<string, any>;
 
+type Fn = (...x: any[]) => void;
+
 export default abstract class Store {
-    private observers: Set<Function> = new Set();
+    private observers: Set<Fn> = new Set();
 
     constructor(protected state: State = {}) {}
 
-    observe(fn: Function): () => void {
+    observe(fn: Fn): () => void {
         this.observers.add(fn);
         return (): void => {
             this.observers.delete(fn);

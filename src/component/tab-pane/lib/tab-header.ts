@@ -44,8 +44,8 @@ export class TabHeader extends HTMLElement {
      * would prevent the class property setter from ever being called.
      */
     _upgradeProperty(prop) {
-        if (this.hasOwnProperty(prop)) {
-            let value = this[prop];
+        if (Object.prototype.hasOwnProperty.call(this, prop)) {
+            const value = this[prop];
             delete this[prop];
             this[prop] = value;
         }

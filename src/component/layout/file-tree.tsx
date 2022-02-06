@@ -17,7 +17,7 @@ export const FileTree = (props: {
         }, 500);
     }
 
-    while (true) {
+    while (stack.length) {
         const element = stack.pop();
 
         if (!element) break;

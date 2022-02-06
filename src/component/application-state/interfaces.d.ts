@@ -8,4 +8,4 @@ export interface FileStoreState {
     fileData: Map<FileTreeNode, string>;
 }
 
-export interface FileSystemStorage extends Store {}
+export type FileSystemStorage = Store;
