@@ -58,7 +58,7 @@ class FileSystemMock extends EventEmitter implements FileSystem {
     open(_fileHandle: any): void {}
 
     getFileTree() {
-        return fakeFileTree;
+        return JSON.parse(JSON.stringify(fakeFileTree));
     }
 
     openFile(treeNode: FileTreeNode) {

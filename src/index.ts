@@ -2,6 +2,8 @@ import { createLayout } from "./component/layout";
 import { createFileSystem } from "./component/file-system/file-system-mock";
 import { createApplicationState } from "./component/application-state";
 import { createAceManager } from "./component/ace-editor";
+import { setupTabPane } from "./component/tab-pane";
+
 const hostElementFactory = () => {
     const el = document.querySelector("body");
 
@@ -23,4 +25,5 @@ const main = () => {
     });
 };
 
+setupTabPane();
 main();

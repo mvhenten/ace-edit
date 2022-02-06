@@ -10,6 +10,13 @@ export const FileTree = (props: {
     const { onItemClick, tree } = props;
     const stack = tree.nodes;
 
+    if (tree.nodes.length) {
+        const file = tree.nodes[0].children[0];
+        setTimeout(() => {
+            onItemClick(file);
+        }, 500);
+    }
+
     while (true) {
         const element = stack.pop();
 

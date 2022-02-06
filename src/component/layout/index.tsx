@@ -10,6 +10,10 @@ import {
 import { AceEditor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 
+const filename = (path: string) => {
+    return path.substr(path.lastIndexOf("/") + 1);
+};
+
 const Editor = (props: {
     fileSystemStore: FileSystemStorage;
     aceEditorManager: AceEditorManager;
@@ -29,15 +33,20 @@ const Editor = (props: {
 
     for (let [treeNode, fileData] of state.fileData.entries()) {
         entries.push(
-            <AceEditor
-                fileData={fileData}
-                treeNode={treeNode}
-                aceEditorManager={aceEditorManager}
-            />
+            <tab-header slot="tab">{filename(treeNode.path)}</tab-header>,
+            <tab-body slot="panel">
+                <div class="scroll-box">
+                    <AceEditor
+                        fileData={fileData}
+                        treeNode={treeNode}
+                        aceEditorManager={aceEditorManager}
+                    />
+                </div>
+            </tab-body>
         );
     }
 
-    return <div>{entries}</div>;
+    return <tab-container>{entries}</tab-container>;
 };
 
 // Types for props
@@ -59,11 +68,6 @@ class App extends Component<ExpandableProps, ExpandableState> {
     constructor({ name }: { name: string }) {
         super();
         this.state = { toggled: false };
-    }
-
-    componentDidMount() {
-        console.log(this.ref.current);
-        // Logs: [HTMLDivElement]
     }
 
     onFileTreeClick(element: FileTreeNode) {

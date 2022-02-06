@@ -14,34 +14,30 @@
             left: 0;
             display: flex;
             flex-direction: column;
-            border: 6px solid pink;
+            font: 14px sans-serif;
         }
 
         .slot-notifications {
-            height: 100px;
-            border: 1px solid orange;
+            /* height: 100px; */
         }
 
         .app-layout-center {
             flex: auto;
             display: flex;
             flex-direction: row;
-            border: 5px solid purple;
         }
 
         .slot-filetree {
-            border: 1px solid green;
             flex-basis: 20%;
         }
 
         .slot-editor {
-            border: 1px solid red;
             position: relative;
             flex: auto;
+            display:flex;
         }
 
         .slot-preferences {
-            border: 1px solid blue;
             flex-basis: 20%;
         }
 
@@ -68,7 +64,41 @@
             bottom: 0;
             left: 0;
         }
-    </style>
+
+        tab-header {
+            padding: 3px 2em;
+            cursor: pointer;
+            background-color: #ccc;
+        }
+
+        tab-body {
+            background-color: #333;
+            position:relative;
+        }
+ 
+        tab-header[selected] {
+            color: #ccc;
+            background-color: #333;
+        }
+
+        .scroll-box {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: auto;            
+        }
+
+  /**
+   * If JavaScript does not run, the element will not match `:defined`.
+   * In that case this style adds spacing between tabs and previous panel.
+   */
+  tab-headers:not(:defined), tab-header:not(:defined), tab-body:not(:defined) {
+    display: block;
+  }
+
+</style>
 </head>
 <body class="">
 
