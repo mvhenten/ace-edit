@@ -45,6 +45,21 @@
             flex-basis: 20%;
         }
 
+        .file-tree {
+            padding: 0;
+        }
+
+        .file-tree .tree-item {
+            border:1px solid pink;
+            cursor: pointer;
+            display: block;
+        }
+
+        .file-tree .tree-item:before {
+            content: "📄";
+            padding: 0 7px;
+        }
+
 
         #editor { 
             position: absolute;

@@ -1,33 +1,26 @@
-// alert("hello");
-
-// const ace = require("ace-builds/src-noconflict/ace");
-
-// require("ace-builds/webpack-resolver");
-
 import { createLayout } from "./component/layout";
-// import { createEditor } from "./component/ace-editor";
-
-const hostElement = () => {
+import { createFileSystem } from "./component/file-system/file-system-mock";
+import { createApplicationState } from "./component/application-state";
+import { createAceManager } from "./component/ace-editor";
+const hostElementFactory = () => {
     const el = document.querySelector("body");
 
     if (!el) throw new Error("Missing dom element!");
     return el;
-}
-
-
+};
 
 const main = () => {
+    const applicationState = createApplicationState();
+    const { fileSystemStore } = applicationState;
+    const fileSystem = createFileSystem(fileSystemStore);
+    const aceEditorManager = createAceManager();
 
-
-    createLayout(hostElement);
-
-
-    // console.log("Editor:", el);
-
-    // var editor = ace.edit(el);
-    // editor.setTheme("ace/theme/twilight");
-    // editor.session.setMode("ace/mode/javascript");
-
-}
+    createLayout({
+        aceEditorManager,
+        hostElementFactory,
+        fileSystem,
+        fileSystemStore,
+    });
+};
 
 main();

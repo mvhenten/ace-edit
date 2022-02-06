@@ -7,7 +7,10 @@
     "clean": "rm dist/bundle.js",
     "server": "webpack serve --mode development --config webpack.server.js",
     "build:dev": "webpack --mode development",
-    "build:prod": "webpack --mode production"
+    "build:prod": "webpack --mode production",
+    "fix": "prettier -w src/",
+    "test": "npm run test:prettier",
+    "test:prettier": "prettier -c src/"
   },
   "repository": {
     "type": "git",
@@ -18,11 +21,17 @@
   "bugs": {
     "url": "https://github.com/ischen/aceite/issues"
   },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "singleQuote": false
+  },
   "homepage": "https://github.com/ischen/aceite#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "ace-builds": "^1.4.14",
+    "ava": "^4.0.1",
     "css-loader": "^6.5.1",
     "eslint": "^8.8.0",
     "events": "^3.3.0",
@@ -35,6 +44,7 @@
     "serve": "^13.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
+    "ts-sinon": "^2.0.2",
     "typescript": "^4.5.5",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
