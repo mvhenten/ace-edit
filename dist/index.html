@@ -45,17 +45,29 @@
             padding: 0;
         }
 
-        .file-tree .tree-item {
-            border:1px solid pink;
-            cursor: pointer;
-            display: block;
+        .file-tree ul {
+            padding: 0 1em;
         }
 
-        .file-tree .tree-item:before {
-            content: "📄";
+        .file-tree .tree-item {
+            cursor: pointer;
+            display: block;
+            padding: 3px 0;
+        }
+
+        .file-tree .file:hover {
+            background-color: #ccc;
+        }
+
+        .file-tree .tree-item.file:before {
+            content: "❮❯";
             padding: 0 7px;
         }
 
+        .file-tree .tree-item.directory:before {
+            content: "⌄";
+            padding: 0 7px;
+        }
 
         #editor { 
             position: absolute;
