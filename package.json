@@ -8,6 +8,7 @@
     "server": "webpack serve --mode development --config webpack.server.js",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
+    "build": "npm run build:prod",
     "fix": "prettier -w src/",
     "test": "npm run test:prettier && npm run test:eslint && npm run test:unit",
     "test:eslint": "eslint src",
