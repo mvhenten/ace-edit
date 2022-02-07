@@ -1,5 +1,6 @@
 import { createLayout } from "./component/layout";
-import { createFileSystem } from "./component/file-system/file-system-mock";
+import { createFileSystem as createMockFileSystem } from "./component/file-system/file-system-mock";
+import { createFileSystem } from "./component/file-system/file-system-web";
 import { createApplicationState } from "./component/application-state";
 import { createAceManager } from "./component/ace-editor";
 import { setupTabPane } from "./component/tab-pane";
@@ -11,10 +12,14 @@ const hostElementFactory = () => {
     return el;
 };
 
+const useMock = /mock=1/.test(document.location.search);
+
 const main = () => {
     const applicationState = createApplicationState();
     const { fileSystemStore } = applicationState;
-    const fileSystem = createFileSystem(fileSystemStore);
+    const fileSystem = useMock
+        ? createMockFileSystem(fileSystemStore)
+        : createFileSystem(fileSystemStore);
     const aceEditorManager = createAceManager();
 
     createLayout({

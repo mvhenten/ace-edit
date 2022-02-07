@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import { FileTree } from "../application-state/interfaces";
 import {
     FileSystem,
     FileTreeNode,
@@ -8,31 +9,31 @@ import {
 export const fakeFileTree = {
     nodes: [
         {
-            kind: "Directory",
+            kind: "directory",
             path: "/test",
             children: [
                 {
-                    kind: "File",
+                    kind: "file",
                     path: "/test/index.js",
                 },
                 {
-                    kind: "File",
+                    kind: "file",
                     path: "/test/README.md",
                 },
                 {
-                    kind: "File",
+                    kind: "file",
                     path: "/test/package.json",
                 },
                 {
-                    kind: "Directory",
+                    kind: "directory",
                     path: "/test/src",
                     children: [
                         {
-                            kind: "File",
+                            kind: "file",
                             path: "/test/src/demo.js",
                         },
                         {
-                            kind: "File",
+                            kind: "file",
                             path: "/test/src/demo-test.js",
                         },
                     ],
@@ -55,12 +56,15 @@ class FileSystemMock extends EventEmitter implements FileSystem {
         super();
     }
 
-    open(_fileHandle: any): void {
+    open(): void {
         console.error("FileSystem.open called on mock");
     }
 
     getFileTree() {
-        return JSON.parse(JSON.stringify(fakeFileTree));
+        const fileTree = JSON.parse(
+            JSON.stringify(fakeFileTree)
+        ) as any as FileTree;
+        this.fileSystemStorage.storeFileTree(fileTree);
     }
 
     openFile(treeNode: FileTreeNode) {

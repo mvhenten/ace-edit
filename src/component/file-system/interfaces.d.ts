@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import { FileTree } from "../application-state/interfaces";
 
 export type FileTreeNode = {
     kind: string;
@@ -7,10 +8,12 @@ export type FileTreeNode = {
 };
 
 export interface FileSystemStorageBackend {
+    storeFileTree(fileTree: FileTree);
     storeFileData(treeNode: FileTreeNode, data: string): void;
 }
 
 export interface FileSystem extends EventEmitter {
-    getFileTree(): { nodes: FileTreeNode[] };
+    getFileTree(): void;
     openFile(node: FileTreeNode): void;
+    open(): void;
 }
