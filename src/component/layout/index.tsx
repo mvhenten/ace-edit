@@ -1,16 +1,17 @@
 import { Component, createRef, render } from "preact";
-import { FileTree } from "./file-tree";
+import { FileTreeView } from "./file-tree";
 import { FileSystem, FileTreeNode } from "../file-system/interfaces";
 
 import {
-    FileStoreState,
+    FileData,
     FileSystemStorage,
+    FileTree,
 } from "../application-state/interfaces";
 import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 
 // Types for props
-type ExpandableProps = {
+type AppProps = {
     title: string;
     fileSystem: FileSystem;
     fileSystemStore: FileSystemStorage;
@@ -18,16 +19,51 @@ type ExpandableProps = {
 };
 
 // Types for state
-type ExpandableState = {
+type AppState = {
     toggled: boolean;
+    fileTree: FileTree;
+    fileData: FileData;
 };
 
-class App extends Component<ExpandableProps, ExpandableState> {
+const FileTreeNotification = (props: {
+    onClick: () => void;
+    fileTree: FileTree;
+}) => {
+    const { fileTree, onClick } = props;
+
+    if (fileTree.nodes.length) return;
+
+    return (
+        <div className="alert alert-info">
+            You haven not opened any files yet.
+            <button onClick={onClick}>Open file picker</button>
+        </div>
+    );
+};
+
+class App extends Component<AppProps, AppState> {
     ref = createRef();
 
     constructor({ name }: { name: string }) {
         super();
-        this.state = { toggled: false };
+        this.state = {
+            toggled: false,
+            fileTree: { nodes: [] },
+            fileData: new Map(),
+        };
+    }
+
+    componentDidMount(): void {
+        this.props.fileSystemStore.observe((newState) => {
+            const { fileTree, fileData } = newState;
+            this.setState({ fileTree, fileData });
+        });
+
+        this.props.fileSystem.getFileTree();
+    }
+
+    onOpenFileClick() {
+        this.props.fileSystem.open();
     }
 
     onFileTreeClick(element: FileTreeNode) {
@@ -35,20 +71,27 @@ class App extends Component<ExpandableProps, ExpandableState> {
     }
 
     render() {
+        const { fileTree } = this.props.fileSystemStore.getState();
+
         return (
             <div className="app-layout">
-                <div className="slot-notifications">notifications</div>
+                <div className="slot-notifications">
+                    <FileTreeNotification
+                        onClick={() => this.onOpenFileClick()}
+                        fileTree={this.state.fileTree}
+                    />
+                </div>
                 <div className="app-layout-center">
                     <div className="slot-filetree">
-                        <FileTree
+                        <FileTreeView
+                            fileTree={this.state.fileTree}
                             onItemClick={(e) => this.onFileTreeClick(e)}
-                            tree={this.props.fileSystem.getFileTree()}
                         />
                     </div>
                     <div className="slot-editor">
                         <Editor
                             aceEditorManager={this.props.aceEditorManager}
-                            fileSystemStore={this.props.fileSystemStore}
+                            fileData={this.state.fileData}
                         />
                     </div>
                     <div className="slot-preferences"></div>

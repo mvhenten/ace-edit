@@ -9,6 +9,7 @@ export default abstract class Store {
 
     observe(fn: Fn): () => void {
         this.observers.add(fn);
+
         return (): void => {
             this.observers.delete(fn);
         };
@@ -34,6 +35,7 @@ export default abstract class Store {
 
             this.state[key] = value;
         }
+
         for (const fn of this.observers) {
             fn(this.getState());
         }

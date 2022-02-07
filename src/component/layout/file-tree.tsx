@@ -1,11 +1,7 @@
 import { FileTreeNode } from "../file-system/interfaces";
+import { FileTree } from "../application-state/interfaces";
 
 type FileTreeCallback = (element: FileTreeNode) => void;
-
-type FileTreeProps = {
-    onItemClick: FileTreeCallback;
-    tree: { nodes: FileTreeNode[] };
-};
 
 const FileTreeItemChildren = (props: {
     element: FileTreeNode;
@@ -13,12 +9,16 @@ const FileTreeItemChildren = (props: {
 }) => {
     const { element, onItemClick } = props;
 
-    if (element.kind !== "Directory") return null;
+    if (element.kind !== "directory") return null;
 
     return (
         <ul>
             {element.children.map((el) => (
-                <FileTreeItem element={el} onItemClick={onItemClick} />
+                <FileTreeItem
+                    key={el.path}
+                    element={el}
+                    onItemClick={onItemClick}
+                />
             ))}
         </ul>
     );
@@ -31,11 +31,11 @@ const FileTreeItem = (props: {
     const { element, onItemClick } = props;
 
     const onClick = () => {
-        if (element.kind !== "Directory") onItemClick(element);
+        if (element.kind !== "directory") onItemClick(element);
     };
 
     const className =
-        element.kind === "Directory" ? "tree-item directory" : "tree-item file";
+        element.kind === "directory" ? "tree-item directory" : "tree-item file";
 
     return (
         <li className={className} onClick={onClick}>
@@ -46,23 +46,23 @@ const FileTreeItem = (props: {
 };
 
 // todo replace this with a real file tree
-export const FileTree = (props: FileTreeProps) => {
-    // just flatten the thing
-    const flatTree: any[] = [];
-    const { onItemClick, tree } = props;
-    const stack = tree.nodes;
+export const FileTreeView = (props: {
+    onItemClick: FileTreeCallback;
+    fileTree: FileTree;
+}) => {
+    const { onItemClick } = props;
+    const { fileTree } = props;
 
-    if (tree.nodes.length) {
-        const file = tree.nodes[0].children[0];
-        setTimeout(() => {
-            onItemClick(file);
-        }, 500);
-    }
+    if (!fileTree.nodes.length) return null;
 
     return (
         <ul className="file-tree">
-            {tree.nodes.map((el) => (
-                <FileTreeItem element={el} onItemClick={onItemClick} />
+            {fileTree.nodes.map((el) => (
+                <FileTreeItem
+                    key={el.path}
+                    element={el}
+                    onItemClick={onItemClick}
+                />
             ))}
         </ul>
     );

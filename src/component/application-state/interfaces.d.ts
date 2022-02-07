@@ -1,11 +1,13 @@
-import {
-    FileTreeNode,
-    FileSystemStorageBackend,
-} from "../file-system/interfaces";
+import { FileTreeNode } from "../file-system/interfaces";
 import Store from "./lib/store";
 
+export type FileTree = { nodes: FileTreeNode[] };
+
+export type FileData = Map<FileTreeNode, string>;
+
 export interface FileStoreState {
-    fileData: Map<FileTreeNode, string>;
+    fileData: FileData;
+    fileTree: FileTree;
 }
 
 export type FileSystemStorage = Store;
