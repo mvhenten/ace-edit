@@ -17,17 +17,17 @@ export const Preferences = (props: PreferencesProps) => {
 
     return (
         <div>
-            <h3 class="pref-header">Preferences</h3>
+            <h3 className="pref-header">Preferences</h3>
             <table>
                 <tr>
-                    <td class="pref-label">Mode:</td>
-                    <td class="pref-control">
+                    <td className="pref-label">Mode:</td>
+                    <td className="pref-control">
                         <select
                             value={options.get("mode")}
                             onChange={handleModeChange}
                         >
                             {modelist.modes.map((mode) => (
-                                <option value={mode.mode}>
+                                <option key={mode} value={mode.mode}>
                                     {mode.caption}
                                 </option>
                             ))}
@@ -35,8 +35,8 @@ export const Preferences = (props: PreferencesProps) => {
                     </td>
                 </tr>
                 <tr>
-                    <td class="pref-label">Font size:</td>
-                    <td class="pref-control">
+                    <td className="pref-label">Font size:</td>
+                    <td className="pref-control">
                         <input
                             type="number"
                             value={options.get("fontSize")}
@@ -45,8 +45,8 @@ export const Preferences = (props: PreferencesProps) => {
                     </td>
                 </tr>
                 <tr>
-                    <td class="pref-label">Show Gutter:</td>
-                    <td class="pref-control">
+                    <td className="pref-label">Show Gutter:</td>
+                    <td className="pref-control">
                         <input
                             type="checkbox"
                             checked={options.get("showGutter")}
