@@ -1,3 +1,3 @@
 export interface AceEditorManager {
-    createEditor(targetDomNode: HTMLElement): void;
+    createEditor(targetDomNode: HTMLElement, options: OptionsData): void;
 }
