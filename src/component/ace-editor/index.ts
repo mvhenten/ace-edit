@@ -1,6 +1,7 @@
 // HACK: without this line importing of ace modules fails
 (window as any).ace = require("ace-builds/src-noconflict/ace");
 import ace = require("ace-builds/src-noconflict/ace");
+require("ace-builds/src-noconflict/ext-language_tools");
 require("ace-builds/webpack-resolver");
 
 import { AceEditorManager } from "./interfaces";
@@ -13,8 +14,6 @@ class Manager implements AceEditorManager {
 
     createEditor(targetDomNode: HTMLElement, options: OptionsData): void {
         const editor = ace.edit(targetDomNode, {
-            theme: "ace/theme/tomorrow_night_eighties",
-            mode: "ace/mode/html",
             // minLines: 100,
             maxLines: 999,
             wrap: true,
