@@ -98,10 +98,14 @@ class App extends Component<AppProps, AppState> {
                 </div>
                 <div className="app-layout-center">
                     <div className="slot-filetree">
-                        <FileTreeView
-                            fileTree={this.state.fileTree}
-                            onItemClick={(e) => this.onFileTreeClick(e)}
-                        />
+                        <box-resizable className="panel-file-tree">
+                            <div slot="resizable-content">
+                                <FileTreeView
+                                    fileTree={this.state.fileTree}
+                                    onItemClick={(e) => this.onFileTreeClick(e)}
+                                />
+                            </div>
+                        </box-resizable>
                     </div>
                     <div className="slot-editor">
                         <Editor
@@ -111,13 +115,17 @@ class App extends Component<AppProps, AppState> {
                         />
                     </div>
                     <div className="slot-preferences">
-                        <PreferencesPanel
-                            preferences={preferenceData}
-                            options={this.state.options}
-                            onOptionChange={(key, value) =>
-                                this.onOptionChange(key, value)
-                            }
-                        />
+                        <box-resizable data-resizeDirection="left">
+                            <div slot="resizable-content">
+                                <PreferencesPanel
+                                    preferences={preferenceData}
+                                    options={this.state.options}
+                                    onOptionChange={(key, value) =>
+                                        this.onOptionChange(key, value)
+                                    }
+                                />
+                            </div>
+                        </box-resizable>
                     </div>
                 </div>
             </div>
