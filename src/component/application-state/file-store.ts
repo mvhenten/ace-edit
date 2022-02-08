@@ -1,14 +1,27 @@
 import Store from "./lib/store";
-import { FileTreeNode } from "../file-system/interfaces";
+import {
+    FileSystemStorageBackend,
+    FileTreeNode,
+} from "../file-system/interfaces";
 
-import { FileStoreState, FileSystemStorage, FileTree } from "./interfaces";
+export type FileTree = { nodes: FileTreeNode[] };
 
-export class FileSystemStore extends Store implements FileSystemStorage {
+export type FileData = Map<FileTreeNode, string>;
+
+export interface FileStoreState {
+    fileData: FileData;
+    fileTree: FileTree;
+}
+
+export class FileSystemStore
+    extends Store<FileStoreState>
+    implements FileSystemStorageBackend
+{
     constructor() {
         super({
             fileData: new Map(),
             fileTree: { nodes: [] },
-        } as FileStoreState);
+        });
     }
 
     storeFileData(treeNode: FileTreeNode, data: string) {

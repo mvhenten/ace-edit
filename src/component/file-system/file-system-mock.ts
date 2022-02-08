@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { FileTree } from "../application-state/interfaces";
+import { FileTree } from "../application-state";
 import {
     FileSystem,
     FileTreeNode,

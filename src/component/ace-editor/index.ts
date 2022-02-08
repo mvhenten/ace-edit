@@ -4,12 +4,12 @@ import ace = require("ace-builds/src-noconflict/ace");
 require("ace-builds/webpack-resolver");
 
 import { AceEditorManager } from "./interfaces";
-import { OptionsData, OptionsStorage } from "../application-state/interfaces";
+import { OptionsData, OptionsStore } from "../application-state";
 
 class Manager implements AceEditorManager {
     private editors: Map<HTMLElement, any> = new Map();
 
-    constructor(private optionsStore: OptionsStorage) {}
+    constructor(private optionsStore: OptionsStore) {}
 
     createEditor(targetDomNode: HTMLElement, options: OptionsData): void {
         const editor = ace.edit(targetDomNode, {
@@ -36,6 +36,6 @@ class Manager implements AceEditorManager {
     }
 }
 
-export const createAceManager = (optionsStore: OptionsStorage) => {
+export const createAceManager = (optionsStore: OptionsStore) => {
     return new Manager(optionsStore);
 };
