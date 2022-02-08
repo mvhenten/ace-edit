@@ -1,5 +1,5 @@
 import { FileTreeNode } from "../file-system/interfaces";
-import { FileTree } from "../application-state/interfaces";
+import { FileTree } from "../application-state";
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 

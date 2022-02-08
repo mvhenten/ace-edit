@@ -1,7 +1,7 @@
 import { Component, createRef } from "preact";
 import { FileTreeNode } from "../file-system/interfaces";
 import { AceEditorManager } from "../ace-editor/interfaces";
-import { FileData, OptionsData } from "../application-state/interfaces";
+import { FileData, OptionsData } from "../application-state";
 
 const filename = (path: string) => {
     return path.substring(path.lastIndexOf("/") + 1);

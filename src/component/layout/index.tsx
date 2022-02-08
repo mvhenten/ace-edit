@@ -4,12 +4,11 @@ import { FileSystem, FileTreeNode } from "../file-system/interfaces";
 
 import {
     FileData,
-    FileSystemStorage,
+    FileSystemStore,
     FileTree,
     OptionsData,
-    OptionsStorage,
-} from "../application-state/interfaces";
-import { OptionsStore } from "../application-state/options-store";
+    OptionsStore,
+} from "../application-state";
 import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 import { Preferences } from "./preferences";
@@ -18,9 +17,9 @@ import { Preferences } from "./preferences";
 type AppProps = {
     title: string;
     fileSystem: FileSystem;
-    fileSystemStore: FileSystemStorage;
+    fileSystemStore: FileSystemStore;
     aceEditorManager: AceEditorManager;
-    optionsStore: OptionsStorage;
+    optionsStore: OptionsStore;
 };
 
 // Types for state
@@ -127,9 +126,9 @@ class App extends Component<AppProps, AppState> {
 type ApplicationLayoutProps = {
     hostElementFactory: () => Element;
     fileSystem: FileSystem;
-    fileSystemStore: FileSystemStorage;
+    fileSystemStore: FileSystemStore;
     aceEditorManager: AceEditorManager;
-    optionsStore: OptionsStorage;
+    optionsStore: OptionsStore;
 };
 
 export const createLayout = ({

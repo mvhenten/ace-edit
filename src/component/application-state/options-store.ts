@@ -1,8 +1,13 @@
 import Store from "./lib/store";
-import { OptionsStoreState, OptionsData, OptionsStorage } from "./interfaces";
 
-export class OptionsStore extends Store implements OptionsStorage {
-    static initialOptions: OptionsData = new Map<string, any>([
+export type OptionsData = Map<string, any>;
+
+export interface OptionsStoreState {
+    options: OptionsData;
+}
+
+export class OptionsStore extends Store<OptionsStoreState> {
+    static initialOptions = new Map<string, any>([
         ["mode", "ace/mode/html"],
         ["fontSize", 12],
         ["showGutter", true],
@@ -11,11 +16,11 @@ export class OptionsStore extends Store implements OptionsStorage {
     constructor() {
         super({
             options: OptionsStore.initialOptions,
-        } as OptionsStoreState);
+        });
     }
 
     setOption(key: string, value: any): void {
-        const { options } = this.getState() as OptionsStoreState;
+        const { options } = this.getState();
         options.set(key, value);
         this.setState({ options });
     }

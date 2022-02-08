@@ -1,13 +1,11 @@
-type State = Record<string, any>;
+type StateObserverFn<StateType> = (x: StateType) => void;
 
-type Fn = (...x: any[]) => void;
+export default abstract class Store<StateType> {
+    private observers: Set<StateObserverFn<StateType>> = new Set();
 
-export default abstract class Store {
-    private observers: Set<Fn> = new Set();
+    constructor(protected state = {} as StateType) {}
 
-    constructor(protected state: State = {}) {}
-
-    observe(fn: Fn): () => void {
+    observe(fn: StateObserverFn<StateType>): () => void {
         this.observers.add(fn);
 
         return (): void => {
@@ -15,25 +13,13 @@ export default abstract class Store {
         };
     }
 
-    getState(): State {
+    getState(): StateType {
         return Object.assign({}, this.state);
     }
 
-    setState(newState: State): void {
+    setState(newState: Partial<StateType>): void {
         for (const key in newState) {
-            const value = newState[key];
-
-            if (!(key in this.state))
-                throw new Error(`Invalid "${key}" is not part of this state`);
-
-            if (typeof this.state[key] !== typeof value)
-                throw new TypeError(
-                    `Expected a "${typeof this.state[
-                        key
-                    ]}" but got a "${typeof value}" for "${key}"`
-                );
-
-            this.state[key] = value;
+            this.state[key] = newState[key];
         }
 
         for (const fn of this.observers) {

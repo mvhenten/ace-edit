@@ -8,57 +8,35 @@ interface FakeState {
     defaultEnabled: true;
 }
 
-class FakeState extends Store {
+class FakeStore extends Store<FakeState> {
     constructor() {
         super({
             status: "not ok",
             fakeTruth: true,
-        } as FakeState);
+            defaultEnabled: true,
+        });
     }
 }
 
 test("constructor", (t) => {
-    const fakeState = new FakeState();
+    const fakeStore = new FakeStore();
     t.pass("Constructor worked");
-    t.is(fakeState.getState().fakeTruth, true);
-    t.is(fakeState.getState().status, "not ok");
+    t.is(fakeStore.getState().fakeTruth, true);
+    t.is(fakeStore.getState().status, "not ok");
 });
 
 test("observe", (t) => {
-    const fakeState = new FakeState();
+    const fakeStore = new FakeStore();
     const observer = sinon.stub();
-    const cleanup = fakeState.observe(observer);
+    const cleanup = fakeStore.observe(observer);
 
-    fakeState.setState({ status: "fake status" });
+    fakeStore.setState({ status: "fake status" });
 
     t.assert(observer.calledOnce);
 
     cleanup();
 
-    fakeState.setState({ status: "fake status" });
+    fakeStore.setState({ status: "fake status" });
 
     t.assert(observer.calledOnce);
-});
-
-test("initial state", (t) => {
-    const fakeState = new FakeState();
-    const observer = sinon.stub();
-    const cleanup = fakeState.observe(observer);
-
-    t.throws(
-        () => {
-            fakeState.setState({ unknown: "does not exist" });
-        },
-        { message: 'Invalid "unknown" is not part of this state' }
-    );
-
-    t.throws(
-        () => {
-            fakeState.setState({ status: 123 });
-        },
-        { message: `Expected a "string" but got a "number" for "status"` }
-    );
-
-    t.assert(observer.notCalled);
-    cleanup();
 });

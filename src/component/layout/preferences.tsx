@@ -1,5 +1,5 @@
 import modelist = require("ace-builds/src-noconflict/ext-modelist");
-import { OptionsData } from "../application-state/interfaces";
+import { OptionsData } from "../application-state";
 
 export type PreferencesProps = {
     options: OptionsData;
