@@ -9,7 +9,7 @@ import { OptionsData, OptionsStorage } from "../application-state/interfaces";
 class Manager implements AceEditorManager {
     private editors: Map<HTMLElement, any> = new Map();
 
-    constructor(private optionsStore: OptionsStorage) { }
+    constructor(private optionsStore: OptionsStorage) {}
 
     createEditor(targetDomNode: HTMLElement, options: OptionsData): void {
         const editor = ace.edit(targetDomNode, {
