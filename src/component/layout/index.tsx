@@ -11,7 +11,8 @@ import {
 } from "../application-state";
 import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
-import { Preferences } from "./preferences";
+import { preferenceData } from "../preferences";
+import { PreferencesPanel } from "./preferences-panel";
 
 // Types for props
 type AppProps = {
@@ -110,7 +111,8 @@ class App extends Component<AppProps, AppState> {
                         />
                     </div>
                     <div className="slot-preferences">
-                        <Preferences
+                        <PreferencesPanel
+                            preferences={preferenceData}
                             options={this.state.options}
                             onOptionChange={(key, value) =>
                                 this.onOptionChange(key, value)

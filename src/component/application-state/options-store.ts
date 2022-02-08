@@ -9,8 +9,17 @@ export interface OptionsStoreState {
 export class OptionsStore extends Store<OptionsStoreState> {
     static initialOptions = new Map<string, any>([
         ["mode", "ace/mode/html"],
+        ["theme", "ace/theme/tomorrow_night_eighties"],
         ["fontSize", 12],
+        ["tabSize", 4],
+        ["useSoftTabs", true],
+        ["readOnly", false],
         ["showGutter", true],
+        ["showLineNumbers", true],
+        ["showInvisibles", false],
+        ["highlightActiveLine", true],
+        ["showPrintMargin", false],
+        ["enableLiveAutocompletion", false],
     ]);
 
     constructor() {
