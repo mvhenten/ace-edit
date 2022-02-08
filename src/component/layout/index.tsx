@@ -6,11 +6,10 @@ import {
     FileData,
     FileSystemStorage,
     FileTree,
-    EditorData,
-    EditorStorage,
     OptionsData,
     OptionsStorage,
 } from "../application-state/interfaces";
+import { OptionsStore } from "../application-state/options-store";
 import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 import { Preferences } from "./preferences";
@@ -21,7 +20,6 @@ type AppProps = {
     fileSystem: FileSystem;
     fileSystemStore: FileSystemStorage;
     aceEditorManager: AceEditorManager;
-    editorStore: EditorStorage;
     optionsStore: OptionsStorage;
 };
 
@@ -31,7 +29,6 @@ type AppState = {
     fileTree: FileTree;
     fileData: FileData;
     options: OptionsData;
-    editors: EditorData;
 };
 
 const FileTreeNotification = (props: {
@@ -59,12 +56,7 @@ class App extends Component<AppProps, AppState> {
             toggled: false,
             fileTree: { nodes: [] },
             fileData: new Map(),
-            options: new Map<string, any>([
-                ["mode", "ace/mode/html"],
-                ["fontSize", 12],
-                ["showGutter", true],
-            ]),
-            editors: new Map(),
+            options: OptionsStore.initialOptions,
         };
     }
 
@@ -72,10 +64,6 @@ class App extends Component<AppProps, AppState> {
         this.props.fileSystemStore.observe((newState) => {
             const { fileTree, fileData } = newState;
             this.setState({ fileTree, fileData });
-        });
-
-        this.props.editorStore.observe(({ editors }) => {
-            this.setState({ editors });
         });
 
         this.props.optionsStore.observe(({ options }) => {
@@ -94,13 +82,7 @@ class App extends Component<AppProps, AppState> {
     }
 
     onOptionChange(key: string, value: any) {
-        // update options of open editors
-        for (const editor of this.state.editors.values()) {
-            editor.setOption(key, value);
-        }
-
-        // update options in the store
-        this.props.optionsStore.setValue(key, value);
+        this.props.aceEditorManager.updateOption(key, value);
     }
 
     render() {
@@ -147,7 +129,6 @@ type ApplicationLayoutProps = {
     fileSystem: FileSystem;
     fileSystemStore: FileSystemStorage;
     aceEditorManager: AceEditorManager;
-    editorStore: EditorStorage;
     optionsStore: OptionsStorage;
 };
 
@@ -156,7 +137,6 @@ export const createLayout = ({
     fileSystem,
     fileSystemStore,
     aceEditorManager,
-    editorStore,
     optionsStore,
 }: ApplicationLayoutProps) => {
     const targetDomNode = hostElementFactory();
@@ -165,7 +145,6 @@ export const createLayout = ({
             aceEditorManager={aceEditorManager}
             fileSystemStore={fileSystemStore}
             fileSystem={fileSystem}
-            editorStore={editorStore}
             optionsStore={optionsStore}
             title="Hello world"
         />,

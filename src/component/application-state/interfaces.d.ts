@@ -12,17 +12,6 @@ export interface FileStoreState {
 
 export type FileSystemStorage = Store & FileSystemStorageBackend;
 
-export type EditorData = Map<HTMLElement, any>;
-
-export interface EditorStoreState {
-    editors: EditorData;
-}
-
-export type EditorStorage = Store & {
-    openEditor(aceEditor: any);
-    closeEditor(aceEditor: any);
-};
-
 export type OptionsData = Map<string, any>;
 
 export interface OptionsStoreState {
@@ -30,5 +19,5 @@ export interface OptionsStoreState {
 }
 
 export type OptionsStorage = Store & {
-    setValue(key: string, value: any): void;
+    setOption(key: string, value: any): void;
 };
