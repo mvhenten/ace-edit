@@ -70,8 +70,6 @@ export class File extends FileSystemEntry {
                 `File size to large: ${fileData.size}, max ${MAX_SIZE} supported`
             );
 
-        if (!fileData.type) throw new Error(`Unknown file type: ${this.name}`);
-
         return await fileData.text();
     }
 }

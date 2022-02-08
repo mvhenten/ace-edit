@@ -1,7 +1,7 @@
 import { Component, createRef } from "preact";
 import { FileTreeNode } from "../file-system/interfaces";
 import { AceEditorManager } from "../ace-editor/interfaces";
-import { FileData } from "../application-state/interfaces";
+import { FileData, OptionsData } from "../application-state/interfaces";
 
 const filename = (path: string) => {
     return path.substring(path.lastIndexOf("/") + 1);
@@ -11,14 +11,15 @@ export type AceEditorProps = {
     aceEditorManager: AceEditorManager;
     treeNode: FileTreeNode;
     fileData: string;
+    options: Map<string, any>;
 };
 
 export class AceEditor extends Component<AceEditorProps> {
     ref = createRef();
 
     componentDidMount() {
-        const { aceEditorManager } = this.props;
-        aceEditorManager.createEditor(this.ref.current);
+        const { aceEditorManager, options } = this.props;
+        aceEditorManager.createEditor(this.ref.current, options);
     }
 
     render() {
@@ -29,8 +30,10 @@ export class AceEditor extends Component<AceEditorProps> {
 export const Editor = (props: {
     aceEditorManager: AceEditorManager;
     fileData: FileData;
+    options: OptionsData;
 }) => {
-    const { fileData, aceEditorManager } = props;
+    const { fileData, options, aceEditorManager } = props;
+
     const entries = [];
 
     for (const [treeNode, fileContents] of fileData.entries()) {
@@ -42,6 +45,7 @@ export const Editor = (props: {
                         fileData={fileContents}
                         treeNode={treeNode}
                         aceEditorManager={aceEditorManager}
+                        options={options}
                     />
                 </div>
             </tab-body>
