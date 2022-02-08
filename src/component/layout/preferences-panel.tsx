@@ -9,6 +9,59 @@ type PreferencesControlProps = {
     onOptionChange: OptionChangeCallback;
 };
 
+const SelectOption = (props: PreferencesControlProps) => {
+    const { options, onOptionChange, item } = props;
+    const value = options.get(item.key);
+
+    return (
+        <select
+            value={value}
+            onChange={(e) =>
+                onOptionChange(item.key, (e.target as HTMLSelectElement).value)
+            }
+        >
+            {item.selectOptions!.map((option) => (
+                <option key={option.value} value={option.value}>
+                    {option.text}
+                </option>
+            ))}
+        </select>
+    );
+};
+
+const InputOption = (props: PreferencesControlProps) => {
+    const { options, onOptionChange, item } = props;
+    const value = options.get(item.key);
+
+    return (
+        <input
+            type="number"
+            value={value}
+            onInput={(e) =>
+                onOptionChange(
+                    item.key,
+                    parseInt((e.target as HTMLInputElement).value, 10)
+                )
+            }
+        />
+    );
+};
+
+const CheckboxOption = (props: PreferencesControlProps) => {
+    const { options, onOptionChange, item } = props;
+    const value = options.get(item.key);
+
+    return (
+        <input
+            type="checkbox"
+            checked={value}
+            onClick={(e) =>
+                onOptionChange(item.key, (e.target as HTMLInputElement).checked)
+            }
+        />
+    );
+};
+
 const PreferencesControl = (props: PreferencesControlProps) => {
     const { item, options, onOptionChange } = props;
 
@@ -17,52 +70,16 @@ const PreferencesControl = (props: PreferencesControlProps) => {
     }
 
     const value = options.get(item.key);
-    if (item.type === "select") {
-        return (
-            <select
-                value={value}
-                onChange={(e) =>
-                    onOptionChange(
-                        item.key,
-                        (e.target as HTMLSelectElement).value
-                    )
-                }
-            >
-                {item.selectOptions!.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.text}
-                    </option>
-                ))}
-            </select>
-        );
-    } else if (item.type === "integerInput") {
-        return (
-            <input
-                type="number"
-                value={value}
-                onInput={(e) =>
-                    onOptionChange(
-                        item.key,
-                        parseInt((e.target as HTMLInputElement).value, 10)
-                    )
-                }
-            />
-        );
-    } else if (item.type === "checkbox") {
-        return (
-            <input
-                type="checkbox"
-                checked={value}
-                onClick={(e) =>
-                    onOptionChange(
-                        item.key,
-                        (e.target as HTMLInputElement).checked
-                    )
-                }
-            />
-        );
-    } else {
-        throw new Error(`Invalid type '${item.type}'.`);
+
+    switch (item.type) {
+        case "select":
+            return <SelectOption {...props} />;
+        case "integerInput":
+            return <InputOption {...props} />;
+        case "checkbox":
+            return <CheckboxOption {...props} />;
+        default:
+            throw new Error(`Invalid type '${item.type}'.`);
     }
 };
 
