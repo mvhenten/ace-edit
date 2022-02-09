@@ -42,7 +42,6 @@
     "@ava/typescript": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
-    "ace-builds": "^1.4.14",
     "ava": "^4.0.1",
     "css-loader": "^6.5.1",
     "eslint": "^8.8.0",
@@ -67,6 +66,8 @@
   "dependencies": {
     "@types/wicg-file-system-access": "^2020.9.5",
     "less": "^4.1.2",
-    "less-loader": "^10.2.0"
+    "less-loader": "^10.2.0",
+    "ace-code": "0.0.0-rc1",
+    "ace-tree": "0.1.0-rc1"
   }
 }

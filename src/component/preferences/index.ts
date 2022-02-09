@@ -1,5 +1,5 @@
-import modelist = require("ace-builds/src-noconflict/ext-modelist");
-import themelist = require("ace-builds/src-noconflict/ext-themelist");
+import modelist = require("ace-code/src/ext/modelist");
+import themelist = require("ace-code/src/ext/themelist");
 
 export type PreferenceItem = {
     key: string;

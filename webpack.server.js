@@ -23,7 +23,7 @@ const config = {
         // },
         port: 5000,
         compress: true,
-        allowedHosts: [".gitpod.io"],
+        allowedHosts: [".gitpod.io", ".githubpreview.dev"],
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
