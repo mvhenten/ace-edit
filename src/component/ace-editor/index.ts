@@ -1,8 +1,6 @@
-// HACK: without this line importing of ace modules fails
-(window as any).ace = require("ace-builds/src-noconflict/ace");
-import ace = require("ace-builds/src-noconflict/ace");
-require("ace-builds/src-noconflict/ext-language_tools");
-require("ace-builds/webpack-resolver");
+import * as ace from "ace-code";
+import "ace-code/src/ext/language_tools";
+import "ace-code/src/webpack-resolver";
 
 import { AceEditorManager } from "./interfaces";
 import { OptionsData, OptionsStore } from "../application-state";
