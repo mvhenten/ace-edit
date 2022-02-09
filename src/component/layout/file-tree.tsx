@@ -4,6 +4,7 @@ import { Component, createRef } from "preact";
 
 import Tree = require("ace-tree/src/tree");
 import DataProvider = require("ace-tree/src/data_provider");
+import { FileTree } from "../application-state";
 
 const tree = new Tree();
 const model = new DataProvider({});
@@ -32,49 +33,27 @@ function transform(node: any) {
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 
-const FileTreeItemChildren = (props: {
-    element: FileTreeNode;
-    onItemClick: FileTreeCallback;
-}) => {
-    const { element, onItemClick } = props;
-
-    if (element.kind !== "directory") return null;
-
+const NoFileTree = (props: { onOpenFile: () => void }) => {
     return (
-        <ul>
-            {element.children.map((el) => (
-                <FileTreeItem
-                    key={el.path}
-                    element={el}
-                    onItemClick={onItemClick}
-                />
-            ))}
-        </ul>
+        <div className="padding-1 flex col between">
+            <p>You have not added a folder to the workspace yet.</p>
+            <button
+                onClick={props.onOpenFile}
+                className="solid button info margin-vertical-1"
+            >
+                Open Folder
+            </button>
+        </div>
     );
 };
 
-const FileTreeItem = (props: {
-    element: FileTreeNode;
+type FileTreeViewProps = {
+    onOpenFile: () => void;
     onItemClick: FileTreeCallback;
-}) => {
-    const { element, onItemClick } = props;
+    fileTree: FileTree;
+}
 
-    const onClick = () => {
-        if (element.kind !== "directory") onItemClick(element);
-    };
-
-    const className =
-        element.kind === "directory" ? "tree-item directory" : "tree-item file";
-
-    return (
-        <li className={className} onClick={onClick}>
-            {element.path}
-            <FileTreeItemChildren element={element} onItemClick={onItemClick} />
-        </li>
-    );
-};
-
-export class FileTreeView extends Component<any> {
+export class FileTreeView extends Component<FileTreeViewProps> {
     ref = createRef();
 
     componentDidMount() {
@@ -109,6 +88,11 @@ export class FileTreeView extends Component<any> {
 
     render() {
         this.updateTreeData();
+        const { onItemClick, onOpenFile, fileTree } = this.props;
+    
+        if (!fileTree.nodes.length)
+            return <NoFileTree onOpenFile={onOpenFile} />;    
+
         return (
             <div
                 ref={this.ref}

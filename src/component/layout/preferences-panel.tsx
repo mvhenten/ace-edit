@@ -15,6 +15,7 @@ const SelectOption = (props: PreferencesControlProps) => {
 
     return (
         <select
+            className="small"
             value={value}
             onChange={(e) =>
                 onOptionChange(item.key, (e.target as HTMLSelectElement).value)
@@ -35,6 +36,7 @@ const InputOption = (props: PreferencesControlProps) => {
 
     return (
         <input
+            className="small"
             type="number"
             value={value}
             onInput={(e) =>
@@ -91,7 +93,7 @@ export type PreferencesProps = {
 
 export const PreferencesPanel = (props: PreferencesProps) => {
     return (
-        <div>
+        <div className="padding-1">
             <h3 className="pref-header">Preferences</h3>
             <table>
                 {props.preferences.map((item) => (

@@ -1,0 +1,89 @@
+@import (reference) "constants.less";
+
+.text-size (@factor) {
+    @line-height-baseline: ceil(@factor) * @line-height;
+    font-size: floor(@factor * @font-size); // 14
+    line-height: @line-height-baseline; // 14 * 1.4 = 19.6
+}
+
+.header(@name, @factor) {
+    @{name} {
+        .text-size(@factor);
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+.header(h1, 1.8);
+.header(h2, 1.44);
+.header(h3, 1.2);
+.header(h4, 1);
+.header(h5, 0.9);
+.header(h6, 0.8);
+
+p {
+    margin: 0 0 @line-height;
+}
+
+.type {
+    .small,
+    small {
+        font-size: 0.9em;
+        line-height: @line-height;
+    }
+
+    .large {
+        font-size: 1.2em;
+        line-height: 1.2 * @line-height;
+    }
+
+    .xlarge {
+        font-size: 1.44em;
+        line-height: 1.44 * @line-height;
+    }
+
+    .xxlarge {
+        font-size: 1.8em;
+        line-height: 1.8 * @line-height;
+    }
+
+    pre,
+    code {
+        background-color: @color-light;
+        color: @color-dark;
+    }
+
+    code {
+        white-space: nowrap;
+        padding: 0 1ch;
+    }
+
+    pre {
+        border: 1px solid @color-default;
+        padding: 1em;
+    }
+
+    quote {
+        display: block;
+        border-left: 4px solid @color-light;
+        padding-left: 2em;
+        margin: 1em 0;
+    }
+
+    a {
+        color: @color-info;
+    }
+}
+
+.type-grid {
+    background: linear-gradient(to bottom, #fff @line-height - 1px, #cef 1px);
+
+    background-size: 100% @line-height;
+}

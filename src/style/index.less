@@ -1,3 +1,5 @@
+@import "./lib/index";
+
 .app-layout {
     position: absolute;
     top: 0;
@@ -6,8 +8,6 @@
     left: 0;
     display: flex;
     flex-direction: column;
-    font: 14px sans-serif;
-    background: #ccc;
 }
 
 .slot-notifications {
@@ -88,8 +88,8 @@
 }
 
 box-resizable {
-    --grip-background-color: #999;
-    --grip-width: 3px;
+    --grip-background-color: darken(@color-dark, 10%);
+    --grip-width: 1px;
 }
 
 .alert {
@@ -143,8 +143,6 @@ tab-header[selected] {
     padding: 5em 0;
     font-size: 14px;
     line-height: 36px;
-    cursor: pointer;
-    border-bottom: 1px solid #aaa;
 }
 
 .button-bar-vertical.button-bar-left .button {

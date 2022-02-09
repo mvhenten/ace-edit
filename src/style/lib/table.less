@@ -1,0 +1,73 @@
+@import (reference) "constants.less";
+@import (reference) "color.less";
+
+.stripe(@color) {
+    td,
+    th {
+        border-color: @color;
+    }
+
+    tr:nth-child(2n) td {
+        .color(@color);
+    }
+}
+
+.stripes( @names, @index ) when ( @index > 0 ) {
+    @name: extract(@names, @index);
+    @color: color("@{color-@{name}}");
+
+    &.@{name} {
+        .stripe(@color);
+
+        &.lighten {
+            .stripe(lighten(@color, 20%));
+        }
+
+        &.darken {
+            .stripe(darken(@color, 10%));
+        }
+    }
+
+    .stripes( @names, @index - 1 );
+}
+
+table {
+    border-collapse: collapse;
+    box-sizing: content-box;
+
+    &.spread {
+        width: 100%;
+    }
+
+    &.solid {
+        background-color: none !important;
+    }
+
+    tbody {
+        width: 100%;
+    }
+
+    td,
+    th {
+        margin: 0;
+        padding: 0.5em 1em;
+        text-align: left;
+        border-bottom: 1px solid @color-default;
+    }
+
+    th {
+        border-bottom: 2px solid @color-default;
+    }
+
+    tr:last-child {
+        td,
+        th {
+            border: none;
+        }
+    }
+
+    &.stripes {
+        .stripe(@color-default);
+        .stripes( @colors, length(@colors));
+    }
+}

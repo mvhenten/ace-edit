@@ -9,6 +9,7 @@ import {
     OptionsData,
     OptionsStore,
 } from "../application-state";
+
 import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 import { preferenceData } from "../preferences";
@@ -30,22 +31,6 @@ type AppState = {
     fileData: FileData;
     options: OptionsData;
     leftPaneCollapsed: string;
-};
-
-const FileTreeNotification = (props: {
-    onClick: () => void;
-    fileTree: FileTree;
-}) => {
-    const { fileTree, onClick } = props;
-
-    if (fileTree.nodes.length) return;
-
-    return (
-        <div className="alert alert-info">
-            You haven not opened any files yet.
-            <button onClick={onClick}>Open file picker</button>
-        </div>
-    );
 };
 
 class App extends Component<AppProps, AppState> {
@@ -95,19 +80,17 @@ class App extends Component<AppProps, AppState> {
         };
 
         return (
-            <div className="app-layout">
-                <div className="slot-notifications">
-                    <FileTreeNotification
-                        onClick={() => this.onOpenFileClick()}
-                        fileTree={this.state.fileTree}
-                    />
-                </div>
+            <div className="app-layout solid dark">
+                <div className="slot-notifications"></div>
                 <div className="app-layout-center">
                     <div className="slot-filetree">
-                        <div className="button-bar button-bar-vertical button-bar-left">
-                            <span className="button" onClick={onClick}>
+                        <div className="button-bar button-bar-vertical button-bar-left solid dark darken">
+                            <div
+                                className="solid dark button"
+                                onClick={onClick}
+                            >
                                 Filetree
-                            </span>
+                            </div>
                         </div>
                         <box-resizable
                             value={this.state.leftPaneCollapsed}
@@ -118,6 +101,7 @@ class App extends Component<AppProps, AppState> {
                                 <FileTreeView
                                     fileTree={this.state.fileTree}
                                     onItemClick={(e) => this.onFileTreeClick(e)}
+                                    onOpenFile={() => this.onOpenFileClick()}
                                 />
                             </div>
                         </box-resizable>
