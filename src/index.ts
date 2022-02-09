@@ -5,6 +5,8 @@ import { createFileSystem } from "./component/file-system/file-system-web";
 import { createApplicationState } from "./component/application-state";
 import { setupTabPane } from "./component/tab-pane";
 
+import { setupBoxResizable } from "./component/box-resizable";
+
 const hostElementFactory = () => {
     const el = document.querySelector("body");
 
@@ -32,4 +34,5 @@ const main = () => {
 };
 
 setupTabPane();
+setupBoxResizable();
 main();
