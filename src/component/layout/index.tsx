@@ -1,5 +1,5 @@
 import { Component, createRef, render } from "preact";
-import { FileTreeView } from "./file-tree";
+import { NoFileTree, FileTreeView } from "./file-tree";
 import { FileSystem, FileTreeNode } from "../file-system/interfaces";
 
 import {
@@ -93,11 +93,22 @@ class App extends Component<AppProps, AppState> {
                             </div>
                         </div>
                         <box-resizable
+                            width={300}
                             value={this.state.leftPaneCollapsed}
-                            className="panel-file-tree"
                             data-collapsed={this.state.leftPaneCollapsed}
                         >
-                            <div slot="resizable-content">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    width: "100%",
+                                    flexDirection: "column",
+                                }}
+                                slot="resizable-content"
+                            >
+                                <NoFileTree
+                                    fileTree={this.state.fileTree}
+                                    onOpenFile={() => this.onOpenFileClick()}
+                                />
                                 <FileTreeView
                                     fileTree={this.state.fileTree}
                                     onItemClick={(e) => this.onFileTreeClick(e)}

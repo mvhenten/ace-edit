@@ -33,7 +33,12 @@ function transform(node: any) {
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 
-const NoFileTree = (props: { onOpenFile: () => void }) => {
+export const NoFileTree = (props: {
+    fileTree: FileTree;
+    onOpenFile: () => void;
+}) => {
+    if (props.fileTree.nodes.length) return null;
+
     return (
         <div className="padding-1 flex col between">
             <p>You have not added a folder to the workspace yet.</p>
@@ -47,13 +52,19 @@ const NoFileTree = (props: { onOpenFile: () => void }) => {
     );
 };
 
+export const FileTreeView = (props: FileTreeViewProps) => {
+    if (!props.fileTree.nodes.length) return null;
+
+    return <AceTreeView {...props} />;
+};
+
 type FileTreeViewProps = {
     onOpenFile: () => void;
     onItemClick: FileTreeCallback;
     fileTree: FileTree;
-}
+};
 
-export class FileTreeView extends Component<FileTreeViewProps> {
+export class AceTreeView extends Component<FileTreeViewProps> {
     ref = createRef();
 
     componentDidMount() {
@@ -73,6 +84,9 @@ export class FileTreeView extends Component<FileTreeViewProps> {
     updateTreeData() {
         if (!model.root || model.root.fsNode != this.props.fileTree) {
             const treeNodes = transform(this.props.fileTree);
+
+            console.log(treeNodes, "gotcha");
+
             if (treeNodes.children.length == 1) {
                 treeNodes.children[0].isOpen = true;
             }
@@ -88,17 +102,14 @@ export class FileTreeView extends Component<FileTreeViewProps> {
 
     render() {
         this.updateTreeData();
-        const { onItemClick, onOpenFile, fileTree } = this.props;
-    
-        if (!fileTree.nodes.length)
-            return <NoFileTree onOpenFile={onOpenFile} />;    
+        const { fileTree } = this.props;
 
         return (
-            <div
-                ref={this.ref}
-                className="file-tree"
-                style="flex: 1; display: flex; height: 100%"
-            ></div>
+            <div className="scroll-container">
+                <div className="scroll-container-body">
+                    <div ref={this.ref} />
+                </div>
+            </div>
         );
     }
 }

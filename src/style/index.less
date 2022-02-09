@@ -89,7 +89,7 @@
 
 box-resizable {
     --grip-background-color: darken(@color-dark, 10%);
-    --grip-width: 1px;
+    --grip-width: 5px;
 }
 
 .alert {
@@ -161,4 +161,20 @@ tab-headers:not(:defined),
 tab-header:not(:defined),
 tab-body:not(:defined) {
     display: block;
+}
+
+.scroll-container {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.scroll-container-body {
+    position: absolute;
+    overflow: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

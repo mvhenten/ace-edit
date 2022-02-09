@@ -26,6 +26,16 @@ export const fakeFileTree = {
                 },
                 {
                     kind: "directory",
+                    path: "/test/scrolllme",
+                    children: new Array(100).fill("x").map((n, i) => {
+                        return {
+                            kind: "file",
+                            path: `/test/scrolllme/content-${i}.js`,
+                        };
+                    }),
+                },
+                {
+                    kind: "directory",
                     path: "/test/src",
                     children: [
                         {
