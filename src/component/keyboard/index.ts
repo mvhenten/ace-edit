@@ -18,7 +18,7 @@ class KeyboardManager extends EventEmitter {
     }
 
     onEditorCreate(editor: Ace.Editor) {
-        var commands = editor.commands;
+        const commands = editor.commands;
         commands.addCommand({
             name: "save",
             bindKey: { win: "Ctrl-S", mac: "Command-S" },
