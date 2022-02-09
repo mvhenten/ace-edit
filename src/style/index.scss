@@ -27,11 +27,11 @@
 .slot-editor {
     flex-grow: 1;
     position: relative;
-    display:flex;
+    display: flex;
 }
 
 .slot-preferences {
-    display:flex;
+    display: flex;
 }
 
 .slot-preferences .pref-header {
@@ -47,8 +47,8 @@
     width: 160px;
 }
 
-.slot-preferences input[type=text],
-.slot-preferences input[type=number],
+.slot-preferences input[type="text"],
+.slot-preferences input[type="number"],
 .slot-preferences select {
     box-sizing: border-box;
     width: 100%;
@@ -96,7 +96,7 @@ box-resizable {
     background-color: #ccc;
 }
 
-#editor { 
+#editor {
     position: absolute;
     top: 0;
     right: 0;
@@ -112,7 +112,7 @@ tab-header {
 
 tab-body {
     background-color: #333;
-    position:relative;
+    position: relative;
 }
 
 tab-header[selected] {
@@ -126,11 +126,11 @@ tab-header[selected] {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow: auto;            
+    overflow: auto;
 }
 
 .button-bar-vertical {
-    border:1px solid #aaa;
+    border: 1px solid #aaa;
 }
 
 .button-bar-vertical .button {
@@ -138,7 +138,7 @@ tab-header[selected] {
     padding: 5em 0;
     font-size: 14px;
     line-height: 36px;
-    cursor:pointer;
+    cursor: pointer;
     border-bottom: 1px solid #aaa;
 }
 
@@ -154,6 +154,8 @@ tab-header[selected] {
 * If JavaScript does not run, the element will not match `:defined`.
 * In that case this style adds spacing between tabs and previous panel.
 */
-tab-headers:not(:defined), tab-header:not(:defined), tab-body:not(:defined) {
+tab-headers:not(:defined),
+tab-header:not(:defined),
+tab-body:not(:defined) {
     display: block;
 }
