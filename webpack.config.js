@@ -15,18 +15,19 @@ const config = {
         exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
+        test: /\.less$/i,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      }
+          // compiles Less to CSS
+          "style-loader",
+          "css-loader",
+          "less-loader",
+        ],
+      }        
     ]
   },
   resolve: {
     extensions: [
-      '.scss',
+      '.less',
       '.tsx',
       '.ts',
       '.js'
