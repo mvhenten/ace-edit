@@ -48,6 +48,11 @@ class FileSystemWeb extends EventEmitter implements FileSystem {
 
         this.fileSystemStorage.storeFileData(treeNode, fileText);
     }
+
+    async writeFile(node: FileTreeNode, data: string) {
+        await this.dir.writeFile(node.path, data);
+        this.openFile(node);
+    }
 }
 
 export const createFileSystem = (
