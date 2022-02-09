@@ -4,6 +4,7 @@ import { Component, createRef } from "preact";
 
 import Tree = require("ace-tree/src/tree");
 import DataProvider = require("ace-tree/src/data_provider");
+import { FileTree } from "../application-state";
 
 const tree = new Tree();
 const model = new DataProvider({});
@@ -32,49 +33,38 @@ function transform(node: any) {
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 
-const FileTreeItemChildren = (props: {
-    element: FileTreeNode;
-    onItemClick: FileTreeCallback;
+export const NoFileTree = (props: {
+    fileTree: FileTree;
+    onOpenFile: () => void;
 }) => {
-    const { element, onItemClick } = props;
-
-    if (element.kind !== "directory") return null;
+    if (props.fileTree.nodes.length) return null;
 
     return (
-        <ul>
-            {element.children.map((el) => (
-                <FileTreeItem
-                    key={el.path}
-                    element={el}
-                    onItemClick={onItemClick}
-                />
-            ))}
-        </ul>
+        <div className="padding-1 flex col between">
+            <p>You have not added a folder to the workspace yet.</p>
+            <button
+                onClick={props.onOpenFile}
+                className="solid button info margin-vertical-1"
+            >
+                Open Folder
+            </button>
+        </div>
     );
 };
 
-const FileTreeItem = (props: {
-    element: FileTreeNode;
-    onItemClick: FileTreeCallback;
-}) => {
-    const { element, onItemClick } = props;
+export const FileTreeView = (props: FileTreeViewProps) => {
+    if (!props.fileTree.nodes.length) return null;
 
-    const onClick = () => {
-        if (element.kind !== "directory") onItemClick(element);
-    };
-
-    const className =
-        element.kind === "directory" ? "tree-item directory" : "tree-item file";
-
-    return (
-        <li className={className} onClick={onClick}>
-            {element.path}
-            <FileTreeItemChildren element={element} onItemClick={onItemClick} />
-        </li>
-    );
+    return <AceTreeView {...props} />;
 };
 
-export class FileTreeView extends Component<any> {
+type FileTreeViewProps = {
+    onOpenFile: () => void;
+    onItemClick: FileTreeCallback;
+    fileTree: FileTree;
+};
+
+export class AceTreeView extends Component<FileTreeViewProps> {
     ref = createRef();
 
     componentDidMount() {
@@ -94,6 +84,9 @@ export class FileTreeView extends Component<any> {
     updateTreeData() {
         if (!model.root || model.root.fsNode != this.props.fileTree) {
             const treeNodes = transform(this.props.fileTree);
+
+            console.log(treeNodes, "gotcha");
+
             if (treeNodes.children.length == 1) {
                 treeNodes.children[0].isOpen = true;
             }
@@ -109,12 +102,14 @@ export class FileTreeView extends Component<any> {
 
     render() {
         this.updateTreeData();
+        const { fileTree } = this.props;
+
         return (
-            <div
-                ref={this.ref}
-                className="file-tree"
-                style="flex: 1; display: flex; height: 100%"
-            ></div>
+            <div className="scroll-container">
+                <div className="scroll-container-body">
+                    <div ref={this.ref} />
+                </div>
+            </div>
         );
     }
 }

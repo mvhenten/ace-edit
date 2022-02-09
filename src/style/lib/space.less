@@ -1,0 +1,109 @@
+@import (reference) "constants.less";
+
+.space( @space, @keyword ) {
+    .@{keyword}-@{space} {
+        @{keyword}: @space * 1em;
+    }
+
+    .@{keyword}-horizontal-@{space} {
+        @{keyword}-right: @space * 1em;
+        @{keyword}-left: @space * 1em;
+    }
+
+    .@{keyword}-vertical-@{space} {
+        @{keyword}: @space * 1em 0;
+    }
+
+    .@{keyword}-top-@{space} {
+        @{keyword}-top: @space * 1em;
+    }
+
+    .@{keyword}-bottom-@{space} {
+        @{keyword}-bottom: @space * 1em;
+    }
+
+    .@{keyword}-left-@{space} {
+        @{keyword}-left: @space * 1em;
+    }
+
+    .@{keyword}-right-@{space} {
+        @{keyword}-right: @space * 1em;
+    }
+}
+
+.space( @space ) when ( @space > 0 ) {
+    .space(@space, padding);
+    .space(@space, margin);
+    .space( @space - 1 );
+
+    @height: @space * @line-height;
+
+    .min-height-@{space} {
+        min-height: @space * @line-height;
+    }
+
+    .max-height-@{space} {
+        max-height: @space * @line-height;
+    }
+
+    .height-@{space} {
+        height: @space * @line-height;
+    }
+
+    .width-@{space} {
+        width: (@height / 3) * 4;
+    }
+
+    .min-width-@{space} {
+        min-width: (@height / 3) * 4;
+    }
+
+    .max-width-@{space} {
+        max-width: (@height / 3) * 4;
+    }
+
+    .box-@{space} {
+        box-sizing: border-box;
+        height: @height;
+        width: (@height / 3) * 4;
+    }
+}
+
+.space(20);
+
+.vh( @height ) when ( @height > 0 ) {
+    .vh-@{height} {
+        height: @height * 1vh;
+        box-sizing: border-box;
+    }
+
+    .vh-min-@{height} {
+        min-height: @height * 1vh;
+    }
+
+    .vh-max-@{height} {
+        max-height: @height * 1vh;
+    }
+
+    .vh( @height - 10 );
+}
+
+.vh(100);
+
+.spaced( @spaces ) when ( @spaces > 0 ) {
+    .spaced-@{spaces} > * {
+        margin-right: (@spaces * 0.5ch) !important;
+
+        &:last-child {
+            margin-right: none !important;
+        }
+    }
+
+    .spaced-vertical-@{spaces} > * {
+        margin-bottom: 0.5 * @spaces * @line-height;
+    }
+
+    .spaced( @spaces - 1 );
+}
+
+.spaced(5);

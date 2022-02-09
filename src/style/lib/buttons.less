@@ -1,0 +1,44 @@
+@import (reference) "constants.less";
+@import (reference) "color.less";
+
+button,
+.button {
+    border: none;
+    box-sizing: border-box;
+    min-height: @line-height * 2;
+    line-height: @line-height;
+    vertical-align: middle;
+    text-decoration: none;
+    padding: @line-height / 2 2ch;
+    font: inherit;
+    display: inline-block;
+    cursor: pointer;
+
+    .color;
+    &:hover {
+        .hover-color;
+    }
+
+    &a {
+        text-decoration: none;
+    }
+
+    &.small {
+        font-size: 0.9em;
+        min-height: @line-height;
+        padding: 0.3em 1ch;
+    }
+
+    &.large {
+        font-size: 1.2em;
+        // padding: 0.5em 2ch;
+        min-height: 2.5 * @line-height;
+        padding: @line-height * 0.75 2ch;
+    }
+
+    &.xlarge {
+        font-size: 1.8em;
+        min-height: 3 * @line-height;
+        padding: @line-height 2ch;
+    }
+}

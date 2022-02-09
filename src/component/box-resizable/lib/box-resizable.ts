@@ -4,7 +4,7 @@ export class BoxResizable extends HTMLElement {
     private previousSize = -1;
 
     static get observedAttributes() {
-        return ["data-collapsed"];
+        return ["data-collapsed", "width"];
     }
 
     constructor() {
@@ -25,6 +25,8 @@ export class BoxResizable extends HTMLElement {
         }
 
         :host .resizable {
+            overflow:hidden;
+            display: flex;
         }
 
         :host .resizable.transition {
@@ -98,20 +100,30 @@ export class BoxResizable extends HTMLElement {
         const offsetWidth = this.resizable.offsetWidth;
         const resizable = this.resizable;
         this.previousSize = offsetWidth;
+
         resizable.style.width = `${width}px`;
     }
 
+    // @todo this needs a logic work
+    // right now this works because it works but relies
+    // on attribute chagnes in a specific order.
+    // need a clear transition in lifecycle
     attributeChangedCallback(
-        _name: string,
+        name: string,
         _oldValue: string,
         newValue: string
     ) {
         const resizable = this.resizable;
 
+        if (name == "width") {
+            const width = parseInt(newValue, 10);
+            this.previousSize = width;
+            return;
+        }
+
         if (newValue == "collapsed") {
             // set width if it was never set to trigger animation
             if (this.previousSize == -1) this.resize(resizable.offsetWidth);
-
             this.resize(0);
             return;
         }

@@ -1,0 +1,74 @@
+@import (reference) "constants.less";
+
+.border(@color: @color-light) {
+    border: 1px solid @color;
+}
+
+.color(@color: @color-light) {
+    @font-color: contrast(@color, white, @color-dark);
+    background-color: @color;
+    border-color: @color;
+    color: @font-color;
+}
+
+.hover-color(@color: @color-light) {
+    background-color: screen(@color, #444);
+    color: contrast(@color, white, @color-dark);
+}
+
+.color( @names, @index ) when ( @index > 0 ) {
+    @name: extract(@names, @index);
+    @color: color("@{color-@{name}}");
+
+    .solid.@{name} {
+        .color(@color);
+
+        &.fade {
+            .color(fade(@color, 50%));
+        }
+
+        &.lighten {
+            .color(lighten(@color, 20%));
+        }
+
+        &.darken {
+            .color(darken(@color, 10%));
+        }
+    }
+
+    .border.@{name} {
+        .border(@color);
+
+        &.fade {
+            .border(fade(@color, 50%));
+        }
+
+        &.lighten {
+            .border(lighten(@color, 20%));
+        }
+
+        &.darken {
+            .border(darken(@color, 10%));
+        }
+    }
+
+    .button,
+    button {
+        &.solid.@{name}:hover {
+            .hover-color(@color);
+        }
+    }
+
+    .solid.hover-@{name}:hover {
+        background-color: @color !important;
+        .hover-color(@color);
+    }
+
+    .text-@{name} {
+        color: @color;
+    }
+
+    .color( @names, @index - 1 );
+}
+
+.color( @colors, length(@colors));

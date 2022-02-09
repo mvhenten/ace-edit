@@ -1,0 +1,98 @@
+@import (reference) "constants.less";
+@import (reference) "color.less";
+
+input,
+textarea,
+select {
+    font: inherit;
+    padding: 0 1ch;
+    box-sizing: border-box;
+    min-height: @line-height * 2;
+    color: @color-dark;
+    background-color: white;
+    .border;
+
+    border-width: 0 0 1px 0;
+
+    &:focus {
+        outline: none;
+        border-width: 0 0 1px 0;
+        border-color: @color-default;
+    }
+
+    &.small {
+        min-height: @line-height;
+    }
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    min-height: @line-height * 0.75;
+}
+
+.col label {
+    font-size: @font-size * 0.9;
+    line-height: @line-height;
+}
+
+textarea {
+    padding: @line-height * 0.5 1ch;
+}
+
+select,
+select:focus {
+    appearance: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-sizing: border-box;
+    height: @line-height * 2;
+
+    &.small {
+        height: @line-height;
+        min-height: @line-height;
+    }
+}
+
+select {
+    color: @color-dark;
+    box-sizing: border-box;
+    padding-right: 15px;
+    background-size: 10px 15px;
+    background-repeat: no-repeat;
+    background-position: ~"calc(100% - 7px)" ~"calc(50% + 4px)",
+        ~"calc(100% - 7px)" ~"calc(50% + 4px)";
+    background-image: linear-gradient(
+            to bottom right,
+            transparent,
+            transparent 50%,
+            white 50%,
+            white
+        ),
+        linear-gradient(
+            to bottom left,
+            @color-dark,
+            @color-dark 50%,
+            transparent 50%,
+            transparent
+        );
+}
+
+label {
+    padding: 0.7em 0 0;
+}
+
+.noresize {
+    resize: none;
+}
+
+.icon::before {
+    display: inline-block;
+    margin-right: 0.5em;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}

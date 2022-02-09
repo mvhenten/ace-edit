@@ -32,7 +32,6 @@ export class TabContainer extends HTMLElement {
             flex: auto;
             display: flex;
             flex-direction: column;
-            background-color: #fefefe;
         }
 
         ::slotted(tab-body) {

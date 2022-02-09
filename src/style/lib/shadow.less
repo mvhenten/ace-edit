@@ -1,0 +1,28 @@
+.shadow(@index) when (@index > 0) {
+    @fact: @index + 1;
+    @size: @fact * 1px;
+
+    .shadow-@{index} {
+        box-shadow: @size @size @size * 3 fade(black, 75%);
+    }
+
+    .shadow-top-@{index} {
+        box-shadow: 0 @size * -2 @size * 3 @size * -1 fade(black, 75%);
+    }
+
+    .shadow-bottom-@{index} {
+        box-shadow: 0 @size * 2 @size * 3 @size * -1 fade(black, 75%);
+    }
+
+    .shadow-right-@{index} {
+        box-shadow: @size * 2 @size * 0.2 @size * 4 @size * -1 fade(black, 75%);
+    }
+
+    .shadow-left-@{index} {
+        box-shadow: @size * -2 @size * 0.2 @size * 4 @size * -1 fade(black, 75%);
+    }
+
+    .shadow(@index - 1);
+}
+
+.shadow(5);
