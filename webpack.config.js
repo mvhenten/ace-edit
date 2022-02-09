@@ -26,6 +26,7 @@ const config = {
   },
   resolve: {
     extensions: [
+      '.scss',
       '.tsx',
       '.ts',
       '.js'

@@ -7,6 +7,8 @@ import { setupTabPane } from "./component/tab-pane";
 
 import { setupBoxResizable } from "./component/box-resizable";
 
+import "./style/index";
+
 const hostElementFactory = () => {
     const el = document.querySelector("body");
 
