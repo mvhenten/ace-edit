@@ -54,11 +54,27 @@ export const fakeFileTree = {
 };
 
 const fakeFileSystemData = (data: FileTreeNode) => {
-    return `
-This is just some fake data
-it was generated to provide the contents of a file called ${data.path}   
-But it really does not exist.
-    `;
+    return `// file: ${data.path}
+function hackathon() {
+    let daysToHack = 5;
+    const eat = () => console.log("eating...");
+    const sleep = () => console.log("sleeping...");
+    const hack = (prototype) => {
+        console.log("hacking...");
+        prototype.push("🚀");
+    }
+
+    const prototype = [];
+    while (daysToHack--) {
+        eat();
+        sleep();
+        hack(prototype);
+    }
+
+    return prototype;
+}
+
+hackathon();`;
 };
 
 class FileSystemMock extends EventEmitter implements FileSystem {
@@ -78,10 +94,9 @@ class FileSystemMock extends EventEmitter implements FileSystem {
     }
 
     openFile(treeNode: FileTreeNode) {
-        this.fileSystemStorage.storeFileData(
-            treeNode,
-            fakeFileSystemData(treeNode)
-        );
+        const fileText = fakeFileSystemData(treeNode);
+        this.fileSystemStorage.storeFileData(treeNode, fileText);
+        this.emit("openFile", treeNode, fileText);
     }
 
     writeFile(node: FileTreeNode, data: string): void {

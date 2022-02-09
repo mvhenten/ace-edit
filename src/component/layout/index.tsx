@@ -9,11 +9,10 @@ import {
     OptionsData,
     OptionsStore,
 } from "../application-state";
-
-import { Editor } from "./ace-editor";
 import { AceEditorManager } from "../ace-editor/interfaces";
 import { preferenceData } from "../preferences";
 import { PreferencesPanel } from "./preferences-panel";
+import { TabManager } from "../tab-manager/interfaces";
 
 // Types for props
 type AppProps = {
@@ -21,6 +20,7 @@ type AppProps = {
     fileSystem: FileSystem;
     fileSystemStore: FileSystemStore;
     aceEditorManager: AceEditorManager;
+    tabManager: TabManager;
     optionsStore: OptionsStore;
 };
 
@@ -34,7 +34,7 @@ type AppState = {
 };
 
 class App extends Component<AppProps, AppState> {
-    ref = createRef();
+    editorRef = createRef();
 
     constructor() {
         super();
@@ -56,6 +56,10 @@ class App extends Component<AppProps, AppState> {
         this.props.optionsStore.observe(({ options }) => {
             this.setState({ options });
         });
+
+        // initialize the tab manager
+        const editorArea = this.editorRef.current;
+        this.props.tabManager.mountToDOM(editorArea);
 
         this.props.fileSystem.getFileTree();
     }
@@ -117,13 +121,7 @@ class App extends Component<AppProps, AppState> {
                             </div>
                         </box-resizable>
                     </div>
-                    <div className="slot-editor">
-                        <Editor
-                            aceEditorManager={this.props.aceEditorManager}
-                            fileData={this.state.fileData}
-                            options={this.state.options}
-                        />
-                    </div>
+                    <div className="slot-editor" ref={this.editorRef} />
                     <div className="slot-preferences">
                         <box-resizable data-resizeDirection="left">
                             <div slot="resizable-content">
@@ -148,6 +146,7 @@ type ApplicationLayoutProps = {
     fileSystem: FileSystem;
     fileSystemStore: FileSystemStore;
     aceEditorManager: AceEditorManager;
+    tabManager: TabManager;
     optionsStore: OptionsStore;
 };
 
@@ -156,12 +155,14 @@ export const createLayout = ({
     fileSystem,
     fileSystemStore,
     aceEditorManager,
+    tabManager,
     optionsStore,
 }: ApplicationLayoutProps) => {
     const targetDomNode = hostElementFactory();
     render(
         <App
             aceEditorManager={aceEditorManager}
+            tabManager={tabManager}
             fileSystemStore={fileSystemStore}
             fileSystem={fileSystem}
             optionsStore={optionsStore}

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "server": "webpack serve --mode development --config webpack.server.js",
+    "server": "webpack serve --mode development --config webpack.server.js --https",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "build": "npm run build:prod",
@@ -65,6 +65,11 @@
   },
   "dependencies": {
     "@types/wicg-file-system-access": "^2020.9.5",
+    "@lumino/commands": "^1.20.0",
+    "@lumino/default-theme": "^0.21.1",
+    "@lumino/dragdrop": "^1.14.0",
+    "@lumino/messaging": "^1.10.1",
+    "@lumino/widgets": "^1.31.1",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "ace-code": "0.0.0-rc1",

@@ -43,6 +43,11 @@ export const preferenceData: PreferenceItem[] = [
         type: "checkbox",
     },
     {
+        key: "wrap",
+        label: "Word wrap",
+        type: "checkbox",
+    },
+    {
         key: "readOnly",
         label: "Read-only",
         type: "checkbox",

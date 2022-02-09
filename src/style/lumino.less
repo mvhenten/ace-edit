@@ -1,0 +1,29 @@
+@import (reference) "./lib/constants.less";
+@import "~@lumino/default-theme/style/index.css";
+
+@tabbar-height: 35px; // default - 24px
+@tab-height: 30px; // default - 20px
+@active-tab-height: 34px; // default - 23px
+
+.lm-TabBar {
+    min-height: @tabbar-height;
+    max-height: @tabbar-height;
+}
+
+.lm-TabBar-tab {
+    background-color: @color-dark;
+    min-height: @tab-height;
+    max-height: @tab-height;
+    line-height: @tab-height;
+}
+
+.lm-TabBar-tab:hover:not(.lm-mod-current) {
+    background-color: darken(@color-dark, 5%);
+}
+
+.lm-TabBar-tab.lm-mod-current {
+    background-color: darken(@color-dark, 10%);
+    min-height: @active-tab-height;
+    max-height: @active-tab-height;
+    line-height: @active-tab-height;
+}

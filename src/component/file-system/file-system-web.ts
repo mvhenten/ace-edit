@@ -47,6 +47,7 @@ class FileSystemWeb extends EventEmitter implements FileSystem {
         const fileText = await file.getFileText();
 
         this.fileSystemStorage.storeFileData(treeNode, fileText);
+        this.emit("openFile", treeNode, fileText);
     }
 
     async writeFile(node: FileTreeNode, data: string) {
