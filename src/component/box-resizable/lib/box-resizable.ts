@@ -1,6 +1,11 @@
 export class BoxResizable extends HTMLElement {
     private events: Record<string, (evt: MouseEvent) => void>;
     private resizeLeft = false;
+    private previousSize = -1;
+
+    static get observedAttributes() {
+        return ["data-collapsed"];
+    }
 
     constructor() {
         super();
@@ -10,16 +15,24 @@ export class BoxResizable extends HTMLElement {
         <style>
         :host {
             display: flex;
-            flex-direction: ${this.resizeLeft ? "row-reverse" : "row"};
+            flex-direction: row;
         }
 
         :host .grippy {
-            background-color: #666;
             cursor: col-resize;
-            width: 3px;
+            width: var(--grip-width, 3px);
+            background-color: var(--grip-background-color, #aaa);
         }
+
+        :host .resizable {
+        }
+
+        :host .resizable.transition {
+            transition: all 0.1s ease-in;
+        }
+
         </style>
-        <div class="resizable">
+        <div class="resizable transition">
             <slot name="resizable-content"></slot>
         </div>
         <div class="grippy">
@@ -28,8 +41,6 @@ export class BoxResizable extends HTMLElement {
 
         this.attachShadow({ mode: "open" });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-        this.setupResize();
     }
 
     get grip() {
@@ -50,20 +61,23 @@ export class BoxResizable extends HTMLElement {
     }
 
     private setupResize() {
+        const resizable = this.resizable;
         let active = false;
 
         const mouseDown = (evt: MouseEvent) => {
             active = true;
             evt.preventDefault();
+            resizable.classList.remove("transition");
         };
 
         const mouseUp = () => {
+            resizable.classList.add("transition");
             active = false;
         };
 
         const mouseMove = (evt: MouseEvent) => {
             if (!active) return;
-            const width = this.resizable.offsetWidth;
+            const width = resizable.offsetWidth;
             let offset = evt.movementX;
 
             if (this.resizeLeft) offset = -offset;
@@ -77,8 +91,32 @@ export class BoxResizable extends HTMLElement {
         this.events = { mouseDown, mouseUp, mouseMove };
     }
 
-    private resize(width) {
-        this.resizable.style.width = `${width}px`;
+    private resize(width: number) {
+        // noop, also -1 is a special initial value
+        if (width < 0) return;
+
+        const offsetWidth = this.resizable.offsetWidth;
+        const resizable = this.resizable;
+        this.previousSize = offsetWidth;
+        resizable.style.width = `${width}px`;
+    }
+
+    attributeChangedCallback(
+        _name: string,
+        _oldValue: string,
+        newValue: string
+    ) {
+        const resizable = this.resizable;
+
+        if (newValue == "collapsed") {
+            // set width if it was never set to trigger animation
+            if (this.previousSize == -1) this.resize(resizable.offsetWidth);
+
+            this.resize(0);
+            return;
+        }
+
+        this.resize(this.previousSize);
     }
 
     disconnectedCallback() {
@@ -96,5 +134,6 @@ export class BoxResizable extends HTMLElement {
             this.getElement("style").innerText =
                 css + ":host { flex-direction: row-reverse; }";
         }
+        this.setupResize();
     }
 }
