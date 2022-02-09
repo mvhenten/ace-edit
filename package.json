@@ -51,10 +51,8 @@
     "events": "^3.3.0",
     "file-loader": "^6.2.0",
     "htm": "^3.1.0",
-    "node-sass": "^7.0.1",
     "preact": "^10.6.5",
     "prettier": "2.5.1",
-    "sass-loader": "^12.4.0",
     "serve": "^13.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
@@ -67,6 +65,8 @@
     "webpack-loader": "^0.0.1"
   },
   "dependencies": {
-    "@types/wicg-file-system-access": "^2020.9.5"
+    "@types/wicg-file-system-access": "^2020.9.5",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0"
   }
 }
