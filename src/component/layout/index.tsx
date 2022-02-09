@@ -29,6 +29,7 @@ type AppState = {
     fileTree: FileTree;
     fileData: FileData;
     options: OptionsData;
+    leftPaneCollapsed: string;
 };
 
 const FileTreeNotification = (props: {
@@ -50,13 +51,14 @@ const FileTreeNotification = (props: {
 class App extends Component<AppProps, AppState> {
     ref = createRef();
 
-    constructor({ name }: { name: string }) {
+    constructor() {
         super();
         this.state = {
             toggled: false,
             fileTree: { nodes: [] },
             fileData: new Map(),
             options: OptionsStore.initialOptions,
+            leftPaneCollapsed: "",
         };
     }
 
@@ -86,7 +88,11 @@ class App extends Component<AppProps, AppState> {
     }
 
     render() {
-        const { fileTree } = this.props.fileSystemStore.getState();
+        const onClick = () => {
+            let { leftPaneCollapsed } = this.state;
+            leftPaneCollapsed = leftPaneCollapsed == "" ? "collapsed" : "";
+            this.setState({ leftPaneCollapsed });
+        };
 
         return (
             <div className="app-layout">
@@ -98,7 +104,16 @@ class App extends Component<AppProps, AppState> {
                 </div>
                 <div className="app-layout-center">
                     <div className="slot-filetree">
-                        <box-resizable className="panel-file-tree">
+                        <div className="button-bar button-bar-vertical button-bar-left">
+                            <span className="button" onClick={onClick}>
+                                Filetree
+                            </span>
+                        </div>
+                        <box-resizable
+                            value={this.state.leftPaneCollapsed}
+                            className="panel-file-tree"
+                            data-collapsed={this.state.leftPaneCollapsed}
+                        >
                             <div slot="resizable-content">
                                 <FileTreeView
                                     fileTree={this.state.fileTree}
