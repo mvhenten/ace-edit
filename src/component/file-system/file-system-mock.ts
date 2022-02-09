@@ -7,7 +7,7 @@ import {
 } from "./interfaces";
 
 export const fakeFileTree = {
-    nodes: [
+    children: [
         {
             kind: "directory",
             path: "/test",

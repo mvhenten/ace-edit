@@ -37,8 +37,8 @@ class FileSystemWeb extends EventEmitter implements FileSystem {
 
     async getFileTree() {
         if (this.directory) {
-            const nodes = [await this.dir.getFileTee()];
-            this.fileSystemStorage.storeFileTree({ nodes });
+            const children = [await this.dir.getFileTee()];
+            this.fileSystemStorage.storeFileTree({ children });
         }
     }
 

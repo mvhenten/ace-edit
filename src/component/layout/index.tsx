@@ -38,7 +38,7 @@ const FileTreeNotification = (props: {
 }) => {
     const { fileTree, onClick } = props;
 
-    if (fileTree.nodes.length) return;
+    if (fileTree.children.length) return;
 
     return (
         <div className="alert alert-info">
@@ -55,7 +55,7 @@ class App extends Component<AppProps, AppState> {
         super();
         this.state = {
             toggled: false,
-            fileTree: { nodes: [] },
+            fileTree: { children: [] },
             fileData: new Map(),
             options: OptionsStore.initialOptions,
             leftPaneCollapsed: "",

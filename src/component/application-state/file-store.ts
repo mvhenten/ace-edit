@@ -4,7 +4,7 @@ import {
     FileTreeNode,
 } from "../file-system/interfaces";
 
-export type FileTree = { nodes: FileTreeNode[] };
+export type FileTree = { children: FileTreeNode[] };
 
 export type FileData = Map<FileTreeNode, string>;
 
@@ -20,7 +20,7 @@ export class FileSystemStore
     constructor() {
         super({
             fileData: new Map(),
-            fileTree: { nodes: [] },
+            fileTree: { children: [] },
         });
     }
 

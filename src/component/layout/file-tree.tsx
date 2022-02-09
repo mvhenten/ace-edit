@@ -4,77 +4,35 @@ import { Component, createRef } from "preact";
 
 import Tree = require("ace-tree/src/tree");
 import DataProvider = require("ace-tree/src/data_provider");
+import { escapeHTML } from "ace-code/src/lib/lang";
+import { FileTree } from "../application-state";
 
 const tree = new Tree();
 const model = new DataProvider({});
 tree.setDataProvider(model);
 
 model.getIconHTML = function (node) {
-    if (node.fsNode?.kind == "directory") {
+    if (node.kind == "directory") {
         return "";
     } else {
         return "❮❯";
     }
 };
 
-(window as any).tree = tree;
-function transform(node: any) {
+model.getCaptionHTML = function (node) {
     const path = node.path || "";
     const name = path.slice(path.lastIndexOf("/") + 1);
-    let children = node.nodes || node.children;
-    if (children) children = children.map(transform);
-    return {
-        fsNode: node,
-        name,
-        children,
-    };
-}
+    return escapeHTML(name || "");
+};
+
+(window as any).tree = tree;
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 
-const FileTreeItemChildren = (props: {
-    element: FileTreeNode;
+export class FileTreeView extends Component<{
+    fileTree: FileTree;
     onItemClick: FileTreeCallback;
-}) => {
-    const { element, onItemClick } = props;
-
-    if (element.kind !== "directory") return null;
-
-    return (
-        <ul>
-            {element.children.map((el) => (
-                <FileTreeItem
-                    key={el.path}
-                    element={el}
-                    onItemClick={onItemClick}
-                />
-            ))}
-        </ul>
-    );
-};
-
-const FileTreeItem = (props: {
-    element: FileTreeNode;
-    onItemClick: FileTreeCallback;
-}) => {
-    const { element, onItemClick } = props;
-
-    const onClick = () => {
-        if (element.kind !== "directory") onItemClick(element);
-    };
-
-    const className =
-        element.kind === "directory" ? "tree-item directory" : "tree-item file";
-
-    return (
-        <li className={className} onClick={onClick}>
-            {element.path}
-            <FileTreeItemChildren element={element} onItemClick={onItemClick} />
-        </li>
-    );
-};
-
-export class FileTreeView extends Component<any> {
+}> {
     ref = createRef();
 
     componentDidMount() {
@@ -92,14 +50,14 @@ export class FileTreeView extends Component<any> {
     }
 
     updateTreeData() {
-        if (!model.root || model.root.fsNode != this.props.fileTree) {
-            const treeNodes = transform(this.props.fileTree);
+        if (!model.root || model.root != this.props.fileTree) {
+            const treeNodes = this.props.fileTree;
             if (treeNodes.children.length == 1) {
-                treeNodes.children[0].isOpen = true;
+                (treeNodes.children[0] as any).isOpen = true;
             }
             model.setRoot(treeNodes);
             tree.on("afterChoose", () => {
-                const fsNode = tree.selection.getCursor()?.fsNode;
+                const fsNode = tree.selection.getCursor();
                 if (fsNode && fsNode.kind != "directory") {
                     this.props.onItemClick(fsNode);
                 }
