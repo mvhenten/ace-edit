@@ -25,6 +25,7 @@ export class BoxResizable extends HTMLElement {
         }
 
         :host .resizable {
+            overflow:hidden;
             display: flex;
         }
 
