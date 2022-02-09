@@ -58,7 +58,6 @@ export class File extends FileSystemEntry {
 
     async getFileData() {
         const fileData = await this.fileSystemHandle.getFile();
-
         return fileData;
     }
 
@@ -71,6 +70,12 @@ export class File extends FileSystemEntry {
             );
 
         return await fileData.text();
+    }
+
+    async writeFile(contents: string) {
+        const writable = await this.fileSystemHandle.createWritable();
+        await writable.write(contents);
+        await writable.close();
     }
 }
 
@@ -115,6 +120,11 @@ export class Directory extends FileSystemEntry {
         }
 
         return root;
+    }
+
+    async writeFile(pathname: string, contents: string) {
+        const file = await this.getFileByPath(pathname);
+        await file.writeFile(contents);
     }
 
     async getFileByPath(pathname: string) {

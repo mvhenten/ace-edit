@@ -83,6 +83,10 @@ class FileSystemMock extends EventEmitter implements FileSystem {
             fakeFileSystemData(treeNode)
         );
     }
+
+    writeFile(node: FileTreeNode, data: string): void {
+        console.log("Write file", node.path, data);
+    }
 }
 
 export const createFileSystem = (

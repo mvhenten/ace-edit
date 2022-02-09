@@ -18,8 +18,8 @@ export class AceEditor extends Component<AceEditorProps> {
     ref = createRef();
 
     componentDidMount() {
-        const { aceEditorManager, options } = this.props;
-        aceEditorManager.createEditor(this.ref.current, options);
+        const { aceEditorManager, options, treeNode } = this.props;
+        aceEditorManager.createEditor(this.ref.current, treeNode, options);
     }
 
     render() {

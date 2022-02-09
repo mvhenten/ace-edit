@@ -85,8 +85,6 @@ export class AceTreeView extends Component<FileTreeViewProps> {
         if (!model.root || model.root.fsNode != this.props.fileTree) {
             const treeNodes = transform(this.props.fileTree);
 
-            console.log(treeNodes, "gotcha");
-
             if (treeNodes.children.length == 1) {
                 treeNodes.children[0].isOpen = true;
             }

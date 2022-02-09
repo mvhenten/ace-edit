@@ -15,5 +15,6 @@ export interface FileSystemStorageBackend {
 export interface FileSystem extends EventEmitter {
     getFileTree(): void;
     openFile(node: FileTreeNode): void;
+    writeFile(node: FileTreeNode, data: string): void;
     open(): void;
 }

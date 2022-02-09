@@ -29,7 +29,7 @@ module.exports = {
 			"warn",
 			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
 		],
-                "react/react-in-jsx-scope": "off",
+        "react/react-in-jsx-scope": "off",
         "prefer-const": "warn"
     }
 }
