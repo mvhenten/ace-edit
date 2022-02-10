@@ -1,5 +1,6 @@
 import * as ace from "ace-code";
 import { Ace } from "ace-code";
+import modelist = require("ace-code/src/ext/modelist");
 import "ace-code/src/ext/language_tools";
 import "ace-code/src/webpack-resolver";
 
@@ -24,6 +25,7 @@ class Manager extends EventEmitter implements AceEditorManager {
         options: OptionsData
     ): void {
         const editor = ace.edit(targetDomNode, {
+            mode: modelist.getModeForPath(treeNode.path).mode,
             // name: treeNode.path,
             // minLines: 100,
             // maxLines: 999,

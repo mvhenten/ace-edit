@@ -10,15 +10,6 @@ export type PreferenceItem = {
 
 export const preferenceData: PreferenceItem[] = [
     {
-        key: "mode",
-        label: "Mode",
-        type: "select",
-        selectOptions: modelist.modes.map((x) => ({
-            text: x.caption,
-            value: x.mode,
-        })),
-    },
-    {
         key: "theme",
         label: "Theme",
         type: "select",
