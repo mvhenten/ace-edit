@@ -12,10 +12,6 @@
     flex-direction: column;
 }
 
-.slot-notifications {
-    /* height: 100px; */
-}
-
 .app-layout-center {
     flex: auto;
     display: flex;
@@ -31,6 +27,7 @@
     position: relative;
     display: flex;
     min-width: 250px;
+    background-color: #222;
 }
 
 .slot-preferences {
@@ -57,88 +54,9 @@
     width: 100%;
 }
 
-.file-tree {
-    padding: 0;
-}
-
-.file-tree ul {
-    padding: 0 1em;
-}
-
-.file-tree .tree-item {
-    cursor: pointer;
-    display: block;
-    padding: 3px 0;
-}
-
-.file-tree .file:hover {
-    background-color: #ccc;
-}
-
-.file-tree .tree-item.file:before {
-    content: "❮❯";
-    padding: 0 7px;
-}
-
-.file-tree .toggler.open:before {
-    content: "⌄";
-    padding: 0 7px;
-}
-
-.file-tree .toggler.closed:before {
-    content: ">";
-    padding: 0 7px;
-}
-
 box-resizable {
     --grip-background-color: darken(@color-dark, 10%);
-    --grip-width: 5px;
-}
-
-.alert {
-    padding: 2em;
-    text-align: center;
-}
-
-.alert-info {
-    background-color: #ccc;
-}
-
-#editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-tab-header {
-    padding: 3px 2em;
-    cursor: pointer;
-    background-color: #ccc;
-}
-
-tab-body {
-    background-color: #333;
-    position: relative;
-}
-
-tab-header[selected] {
-    color: #ccc;
-    background-color: #333;
-}
-
-.scroll-box {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-}
-
-.button-bar-vertical {
-    border: 1px solid #aaa;
+    --grip-width: 2px;
 }
 
 .button-bar-vertical .button {
@@ -180,4 +98,16 @@ tab-body:not(:defined) {
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+// not standard
+// but works https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+.app-layout ::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: darken(@color-dark, 10%); /* or add it to the track */
+}
+
+.app-layout ::-webkit-scrollbar-thumb {
+    background: @color-dark;
 }

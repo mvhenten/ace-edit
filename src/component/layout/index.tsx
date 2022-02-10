@@ -87,10 +87,10 @@ class App extends Component<AppProps, AppState> {
             <div className="app-layout solid dark">
                 <div className="slot-notifications"></div>
                 <div className="app-layout-center">
-                    <div className="slot-filetree">
-                        <div className="button-bar button-bar-vertical button-bar-left solid dark darken">
+                    <div className="slot-filetree solid dark darken">
+                        <div className="button-bar button-bar-vertical button-bar-left solid dark">
                             <div
-                                className="solid dark button"
+                                className="solid dark darken button"
                                 onClick={onClick}
                             >
                                 Filetree
@@ -121,7 +121,10 @@ class App extends Component<AppProps, AppState> {
                             </div>
                         </box-resizable>
                     </div>
-                    <div className="slot-editor" ref={this.editorRef} />
+                    <div
+                        className="slot-editor darken darken dark"
+                        ref={this.editorRef}
+                    />
                     <div className="slot-preferences">
                         <box-resizable data-resizeDirection="left">
                             <div slot="resizable-content">
