@@ -2,6 +2,9 @@ export class BoxResizable extends HTMLElement {
     private events: Record<string, (evt: MouseEvent) => void>;
     private resizeLeft = false;
     private previousSize = -1;
+    private initialWidth: number = 0;
+    private collapsed: boolean = false;
+
 
     static get observedAttributes() {
         return ["data-collapsed", "width"];
@@ -93,6 +96,18 @@ export class BoxResizable extends HTMLElement {
         this.events = { mouseDown, mouseUp, mouseMove };
     }
 
+    private triggerResize() {
+        if (this.collapsed) {
+            this.resize(0);
+            return;
+        }
+
+        if (this.initialWidth) {
+            this.resize(this.initialWidth);
+            return;
+        }
+    }
+
     private resize(width: number) {
         // noop, also -1 is a special initial value
         if (width < 0) return;
@@ -100,14 +115,10 @@ export class BoxResizable extends HTMLElement {
         const offsetWidth = this.resizable.offsetWidth;
         const resizable = this.resizable;
         this.previousSize = offsetWidth;
-
         resizable.style.width = `${width}px`;
     }
 
-    // @todo this needs a logic work
-    // right now this works because it works but relies
-    // on attribute chagnes in a specific order.
-    // need a clear transition in lifecycle
+
     attributeChangedCallback(
         name: string,
         _oldValue: string,
@@ -115,20 +126,16 @@ export class BoxResizable extends HTMLElement {
     ) {
         const resizable = this.resizable;
 
-        if (name == "width") {
-            const width = parseInt(newValue, 10);
-            this.previousSize = width;
-            return;
+        switch(name) {
+            case "width":
+                this.initialWidth = parseInt(newValue, 10);
+                break;
+            case "data-collapsed":
+                this.collapsed = newValue == "collapsed";
+                break;
         }
 
-        if (newValue == "collapsed") {
-            // set width if it was never set to trigger animation
-            if (this.previousSize == -1) this.resize(resizable.offsetWidth);
-            this.resize(0);
-            return;
-        }
-
-        this.resize(this.previousSize);
+        this.triggerResize();
     }
 
     disconnectedCallback() {
