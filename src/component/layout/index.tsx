@@ -121,7 +121,10 @@ class App extends Component<AppProps, AppState> {
                             </div>
                         </box-resizable>
                     </div>
-                    <div className="slot-editor darken darken dark" ref={this.editorRef} />
+                    <div
+                        className="slot-editor darken darken dark"
+                        ref={this.editorRef}
+                    />
                     <div className="slot-preferences">
                         <box-resizable data-resizeDirection="left">
                             <div slot="resizable-content">
