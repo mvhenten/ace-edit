@@ -11,6 +11,7 @@ const model = new DataProvider({});
 tree.setDataProvider(model);
 
 model.getIconHTML = function (node) {
+    console.log("node", node);
     if (node.fsNode?.kind == "directory") {
         return "";
     } else {
@@ -64,7 +65,7 @@ type FileTreeViewProps = {
     fileTree: FileTree;
 };
 
-export class AceTreeView extends Component<FileTreeViewProps> {
+export class AceTreeViewOld extends Component<FileTreeViewProps> {
     ref = createRef();
 
     componentDidMount() {
@@ -111,3 +112,26 @@ export class AceTreeView extends Component<FileTreeViewProps> {
         );
     }
 }
+
+export class AceTreeViewNew extends Component<FileTreeViewProps> {
+    ref = createRef();
+
+    componentDidMount() {
+        const aceTree = this.ref.current as any;
+        aceTree.updateTreeData(this.props.fileTree);
+    }
+
+    render() {
+        return (
+            <div className="scroll-container">
+                <div className="scroll-container-body">
+                    <ace-tree ref={this.ref} />
+                </div>
+            </div>
+        );
+    }
+}
+
+
+const flip = false;
+export const AceTreeView = flip ? AceTreeViewOld : AceTreeViewNew;
