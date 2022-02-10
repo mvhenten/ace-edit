@@ -1,36 +1,7 @@
 import { FileTreeNode } from "../file-system/interfaces";
-
 import { Component, createRef } from "preact";
-
-import Tree = require("ace-tree/src/tree");
-import DataProvider = require("ace-tree/src/data_provider");
 import { FileTree } from "../application-state";
-
-const tree = new Tree();
-const model = new DataProvider({});
-tree.setDataProvider(model);
-
-model.getIconHTML = function (node) {
-    console.log("node", node);
-    if (node.fsNode?.kind == "directory") {
-        return "";
-    } else {
-        return "❮❯";
-    }
-};
-
-(window as any).tree = tree;
-function transform(node: any) {
-    const path = node.path || "";
-    const name = path.slice(path.lastIndexOf("/") + 1);
-    let children = node.nodes || node.children;
-    if (children) children = children.map(transform);
-    return {
-        fsNode: node,
-        name,
-        children,
-    };
-}
+import { FileTreeWidget } from "../file-tree/interfaces";
 
 type FileTreeCallback = (element: FileTreeNode) => void;
 
@@ -53,85 +24,35 @@ export const NoFileTree = (props: {
     );
 };
 
-export const FileTreeView = (props: FileTreeViewProps) => {
-    if (!props.fileTree.nodes.length) return null;
-
-    return <AceTreeView {...props} />;
-};
-
 type FileTreeViewProps = {
     onOpenFile: () => void;
     onItemClick: FileTreeCallback;
     fileTree: FileTree;
 };
 
-export class AceTreeViewOld extends Component<FileTreeViewProps> {
+export class AceTreeView extends Component<FileTreeViewProps> {
     ref = createRef();
 
     componentDidMount() {
-        const props = this.props;
-        const { onItemClick } = props;
-        const { fileTree } = props;
-
-        tree.container.style.flex = 1;
-        tree.container.style.display = "flex";
-        this.ref.current.appendChild(tree.container);
-        // terrible hack
-        tree.container.style.minHeight = "100vh";
-
-        tree.resize();
-    }
-
-    updateTreeData() {
-        if (!model.root || model.root.fsNode != this.props.fileTree) {
-            const treeNodes = transform(this.props.fileTree);
-
-            if (treeNodes.children.length == 1) {
-                treeNodes.children[0].isOpen = true;
-            }
-            model.setRoot(treeNodes);
-            tree.on("afterChoose", () => {
-                const fsNode = tree.selection.getCursor()?.fsNode;
-                if (fsNode && fsNode.kind != "directory") {
-                    this.props.onItemClick(fsNode);
-                }
-            });
-        }
-    }
-
-    render() {
-        this.updateTreeData();
-        const { fileTree } = this.props;
-
-        return (
-            <div className="scroll-container">
-                <div className="scroll-container-body">
-                    <div ref={this.ref} />
-                </div>
-            </div>
-        );
-    }
-}
-
-export class AceTreeViewNew extends Component<FileTreeViewProps> {
-    ref = createRef();
-
-    componentDidMount() {
-        const aceTree = this.ref.current as any;
+        const aceTree = this.ref.current as FileTreeWidget;
         aceTree.updateTreeData(this.props.fileTree);
+        aceTree.addEventListener("item-click", (evt: CustomEvent) => {
+            this.props.onItemClick(evt.detail);
+        });
     }
 
     render() {
         return (
-            <div className="scroll-container">
-                <div className="scroll-container-body">
-                    <ace-tree ref={this.ref} />
-                </div>
-            </div>
+            <ace-tree ref={this.ref}>
+                <div slot="file-tree" />
+            </ace-tree>
         );
     }
 }
 
+// Avoid attaching ace-tree to the DOM unless needed
+export const FileTreeView = (props: FileTreeViewProps) => {
+    if (!props.fileTree.nodes.length) return null;
 
-const flip = false;
-export const AceTreeView = flip ? AceTreeViewOld : AceTreeViewNew;
+    return <AceTreeView {...props} />;
+};

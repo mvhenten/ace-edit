@@ -7,7 +7,7 @@ import { createKeyboardManager } from "./component/keyboard";
 
 import { setupTabPane } from "./component/tab-pane";
 import { setupBoxResizable } from "./component/box-resizable";
-import { setupAceTree } from "./component/ace-tree";
+import { setupAceTree } from "./component/file-tree";
 
 import "./style/index";
 

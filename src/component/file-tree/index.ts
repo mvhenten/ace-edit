@@ -1,4 +1,4 @@
-import { AceTree } from "./lib/ace-tree";
+import { AceTreeWrapper } from "./lib/ace-tree";
 
 /* eslint-disable */
 declare module "preact/src/jsx" {
@@ -6,11 +6,11 @@ declare module "preact/src/jsx" {
         import HTMLAttributes = JSXInternal.HTMLAttributes;
 
         interface IntrinsicElements {
-            "ace-tree": HTMLAttributes<AceTree>;
+            "ace-tree": HTMLAttributes<AceTreeWrapper>;
         }
     }
 }
 
 export const setupAceTree = () => {
-    customElements.define("ace-tree", AceTree);
+    customElements.define("ace-tree", AceTreeWrapper);
 };
