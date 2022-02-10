@@ -31,6 +31,7 @@ type AppState = {
     fileData: FileData;
     options: OptionsData;
     leftPaneCollapsed: string;
+    rightPaneCollapsed: string;
 };
 
 class App extends Component<AppProps, AppState> {
@@ -44,6 +45,7 @@ class App extends Component<AppProps, AppState> {
             fileData: new Map(),
             options: OptionsStore.initialOptions,
             leftPaneCollapsed: "",
+            rightPaneCollapsed: "collapsed",
         };
     }
 
@@ -77,10 +79,16 @@ class App extends Component<AppProps, AppState> {
     }
 
     render() {
-        const onClick = () => {
+        const onFileTreeToggle = () => {
             let { leftPaneCollapsed } = this.state;
             leftPaneCollapsed = leftPaneCollapsed == "" ? "collapsed" : "";
             this.setState({ leftPaneCollapsed });
+        };
+
+        const onPreferencesToggle = () => {
+            let { rightPaneCollapsed } = this.state;
+            rightPaneCollapsed = rightPaneCollapsed == "" ? "collapsed" : "";
+            this.setState({ rightPaneCollapsed });
         };
 
         return (
@@ -91,7 +99,7 @@ class App extends Component<AppProps, AppState> {
                         <div className="button-bar button-bar-vertical button-bar-left solid dark">
                             <div
                                 className="solid dark darken button"
-                                onClick={onClick}
+                                onClick={onFileTreeToggle}
                             >
                                 Filetree
                             </div>
@@ -126,7 +134,12 @@ class App extends Component<AppProps, AppState> {
                         ref={this.editorRef}
                     />
                     <div className="slot-preferences">
-                        <box-resizable data-resizeDirection="left">
+                        <box-resizable
+                            data-resizeDirection="left"
+                            width={300}
+                            value={this.state.rightPaneCollapsed}
+                            data-collapsed={this.state.rightPaneCollapsed}
+                        >
                             <div slot="resizable-content">
                                 <PreferencesPanel
                                     preferences={preferenceData}
@@ -137,6 +150,14 @@ class App extends Component<AppProps, AppState> {
                                 />
                             </div>
                         </box-resizable>
+                        <div className="button-bar button-bar-vertical solid dark">
+                            <div
+                                className="solid dark darken button"
+                                onClick={onPreferencesToggle}
+                            >
+                                Preferences
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
