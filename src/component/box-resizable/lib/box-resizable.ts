@@ -5,7 +5,6 @@ export class BoxResizable extends HTMLElement {
     private initialWidth: number = 0;
     private collapsed: boolean = false;
 
-
     static get observedAttributes() {
         return ["data-collapsed", "width"];
     }
@@ -118,7 +117,6 @@ export class BoxResizable extends HTMLElement {
         resizable.style.width = `${width}px`;
     }
 
-
     attributeChangedCallback(
         name: string,
         _oldValue: string,
@@ -126,7 +124,7 @@ export class BoxResizable extends HTMLElement {
     ) {
         const resizable = this.resizable;
 
-        switch(name) {
+        switch (name) {
             case "width":
                 this.initialWidth = parseInt(newValue, 10);
                 break;
