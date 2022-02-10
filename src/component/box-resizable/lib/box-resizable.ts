@@ -102,7 +102,6 @@ export class BoxResizable extends HTMLElement {
         this.previousSize = offsetWidth;
 
         resizable.style.width = `${width}px`;
-        window.dispatchEvent(new Event("resize"));
     }
 
     // @todo this needs a logic work

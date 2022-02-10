@@ -8,7 +8,6 @@ export interface OptionsStoreState {
 
 export class OptionsStore extends Store<OptionsStoreState> {
     static initialOptions = new Map<string, any>([
-        ["mode", "ace/mode/javascript"],
         ["theme", "ace/theme/tomorrow_night_eighties"],
         ["fontSize", 12],
         ["tabSize", 4],
