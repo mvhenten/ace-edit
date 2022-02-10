@@ -2,8 +2,8 @@ export class BoxResizable extends HTMLElement {
     private events: Record<string, (evt: MouseEvent) => void>;
     private resizeLeft = false;
     private previousSize = -1;
-    private initialWidth: number = 0;
-    private collapsed: boolean = false;
+    private initialWidth: 0;
+    private collapsed: false;
 
     static get observedAttributes() {
         return ["data-collapsed", "width"];
