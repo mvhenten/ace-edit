@@ -4,7 +4,7 @@ import { createFileSystem as createMockFileSystem } from "./component/file-syste
 import { createFileSystem } from "./component/file-system/file-system-web";
 import { createApplicationState } from "./component/application-state";
 import { createKeyboardManager } from "./component/keyboard";
-
+import { createTabManager } from "./component/tab-manager";
 import { setupTabPane } from "./component/tab-pane";
 import { setupBoxResizable } from "./component/box-resizable";
 
@@ -26,10 +26,16 @@ const main = () => {
         ? createMockFileSystem(fileSystemStore)
         : createFileSystem(fileSystemStore);
     const aceEditorManager = createAceManager(optionsStore);
+    const tabManager = createTabManager(
+        aceEditorManager,
+        fileSystem,
+        optionsStore
+    );
     createKeyboardManager(aceEditorManager, fileSystem);
 
     createLayout({
         aceEditorManager,
+        tabManager,
         hostElementFactory,
         fileSystem,
         fileSystemStore,

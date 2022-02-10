@@ -26,9 +26,9 @@ class Manager extends EventEmitter implements AceEditorManager {
         const editor = ace.edit(targetDomNode, {
             // name: treeNode.path,
             // minLines: 100,
-            maxLines: 999,
-            wrap: true,
-            autoScrollEditorIntoView: true,
+            // maxLines: 999,
+            // wrap: true,
+            // autoScrollEditorIntoView: true,
         });
         options.forEach((value, key) => editor.setOption(key, value));
 
@@ -46,12 +46,28 @@ class Manager extends EventEmitter implements AceEditorManager {
         return meta;
     }
 
+    destroyEditor(targetDomNode: HTMLElement): void {
+        this.getEditor(targetDomNode)?.destroy();
+    }
+
+    focus(targetDomNode: HTMLElement): void {
+        this.getEditor(targetDomNode)?.focus();
+    }
+
+    resize(targetDomNode: HTMLElement): void {
+        this.getEditor(targetDomNode)?.resize();
+    }
+
     updateOption(key: string, value: string): void {
         // update options of open editors
         this.editors.forEach((editor) => editor.setOption(key, value));
 
         // update data in the store
         this.optionsStore.setOption(key, value);
+    }
+
+    private getEditor(targetDomNode: HTMLElement) {
+        return this.editors.get(targetDomNode);
     }
 }
 
