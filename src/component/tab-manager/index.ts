@@ -51,7 +51,7 @@ class AceTabManager implements TabManager {
         });
         this.mainPanel.node.classList.add("main-panel");
         this.mainPanel.addWidget(this.dockPanel);
-        window.addEventListener("resize", () => this.mainPanel.update());
+        new ResizeObserver(() => this.mainPanel.update()).observe(hostElement);
         Widget.attach(this.mainPanel, hostElement);
 
         this.mounted = true;
