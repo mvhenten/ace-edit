@@ -3,6 +3,7 @@ import Tree = require("ace-tree/src/tree");
 import DataProvider = require("ace-tree/src/data_provider");
 import { FileTreeWidget } from "../interfaces";
 import { FileTreeNode } from "../../file-system/interfaces";
+import { getIconUrl } from "./file-type-icons";
 
 const setStyle = (
     element: HTMLElement,
@@ -67,12 +68,17 @@ export class AceTreeWrapper extends HTMLElement implements FileTreeWidget {
     private setupAceTree() {
         this.tree.setDataProvider(this.model);
         this.model.getIconHTML = function (node) {
-            // console.log("node", node);
-            if (node.fsNode?.kind == "directory") {
-                return "";
-            } else {
-                return "❮❯";
-            }
+            const treeNode = node.fsNode as FileTreeNode;
+            const isDir = treeNode.kind === "directory";
+            const size = 16;
+            return `<span class="file-icon">
+<svg width="${size}" height="${size}">
+     <image xlink:href="${getIconUrl(
+         treeNode.path,
+         isDir
+     )}" width="${size}" height="${size}"/>
+</svg>
+</span>`;
         };
 
         // @todo why is this needed?
