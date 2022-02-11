@@ -118,6 +118,7 @@ class App extends Component<AppProps, AppState> {
                                 }}
                                 slot="resizable-content"
                             >
+                                <div className="padding-1">filesystem</div>
                                 <NoFileTree
                                     fileTree={this.state.fileTree}
                                     onOpenFile={() => this.onOpenFileClick()}
