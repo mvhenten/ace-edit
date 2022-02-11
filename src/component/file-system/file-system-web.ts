@@ -52,6 +52,7 @@ class FileSystemWeb extends EventEmitter implements FileSystem {
 
     async writeFile(node: FileTreeNode, data: string) {
         await this.dir.writeFile(node.path, data);
+        this.emit("writeFile", node);
         this.openFile(node);
     }
 }

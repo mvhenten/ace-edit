@@ -23,7 +23,7 @@ class Manager extends EventEmitter implements AceEditorManager {
         targetDomNode: HTMLElement,
         treeNode: FileTreeNode,
         options: OptionsData
-    ): void {
+    ): Ace.Editor {
         const editor = ace.edit(targetDomNode, {
             mode: modelist.getModeForPath(treeNode.path).mode,
             // name: treeNode.path,
@@ -39,6 +39,7 @@ class Manager extends EventEmitter implements AceEditorManager {
         this.editors.set(targetDomNode, editor);
         this.editorMetaData.set(editor, treeNode);
         this.emit("createEditor", editor);
+        return editor;
     }
 
     getMetaData(editor: Ace.Editor): FileTreeNode {
