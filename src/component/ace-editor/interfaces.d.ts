@@ -21,7 +21,7 @@ export interface AceEditorManager extends EventEmitter {
         targetDomNode: HTMLElement,
         treeNode: FileTreeNode,
         options: OptionsData
-    ): void;
+    ): Ace.Editor;
 
     destroyEditor(targetDomNode: HTMLElement): void;
 

@@ -4,6 +4,7 @@ import { OptionsData } from "../application-state";
 export interface Tab {
     get tabName(): string;
     get tabPath(): string;
+    markAsPristine(): void;
     onAttach(callback: () => void): void;
     onActivate(callback: () => void): void;
     onDetach(callback: () => void): void;

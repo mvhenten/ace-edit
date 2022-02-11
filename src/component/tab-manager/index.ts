@@ -24,6 +24,10 @@ class AceTabManager implements TabManager {
         this.fileSystem.on("openFile", (treeNode, fileContent) => {
             this.openEditor(treeNode, fileContent, this.editorOptions);
         });
+
+        this.fileSystem.on("writeFile", (treeNode) => {
+            this.onFileSaved(treeNode);
+        });
     }
 
     get tabs(): Tab[] {
@@ -95,6 +99,13 @@ class AceTabManager implements TabManager {
         this.dockPanel.addWidget(tab);
         this.dockPanel.activateWidget(tab);
     }
+
+    private onFileSaved(treeNode: FileTreeNode): void {
+        const tabsForFile = this.tabs.filter(
+            (x) => x.tabPath === treeNode.path
+        );
+        tabsForFile.forEach((x) => x.markAsPristine());
+    }
 }
 
 class AceTabWidget extends Widget implements Tab {
@@ -121,7 +132,9 @@ class AceTabWidget extends Widget implements Tab {
 
         this.setFlag(Widget.Flag.DisallowLayout);
         this.addClass("tab");
-        this.title.label = this.getFilename(treeNode.path);
+        const filename = this.getFilename(treeNode.path);
+        this.title.label = filename;
+        this.title.caption = filename;
         this.title.closable = true;
     }
 
@@ -139,6 +152,10 @@ class AceTabWidget extends Widget implements Tab {
         return this.treeNode.path;
     }
 
+    markAsPristine(): void {
+        this.title.className = "";
+    }
+
     onAttach(callback: () => void): void {
         this.onAttachCallback = callback;
     }
@@ -152,11 +169,17 @@ class AceTabWidget extends Widget implements Tab {
     }
 
     protected onAfterAttach(): void {
-        this.aceEditorManager.createEditor(
-            this.editorNode,
-            this.treeNode,
-            this.editorOptions
+        const editor = <any>(
+            this.aceEditorManager.createEditor(
+                this.editorNode,
+                this.treeNode,
+                this.editorOptions
+            )
         );
+
+        editor.on("change", () => {
+            this.title.className = "changed";
+        });
 
         if (this.onAttachCallback) {
             this.onAttachCallback();

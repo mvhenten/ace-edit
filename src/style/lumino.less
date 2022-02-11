@@ -15,6 +15,14 @@
     min-height: @tab-height;
     max-height: @tab-height;
     line-height: @tab-height;
+    flex: 0 1 auto;
+    min-width: 125px;
+    max-width: 250px;
+    border: 1px solid darken(@color-dark, 5%);
+}
+
+.lm-TabBar-tab.changed .lm-TabBar-tabCloseIcon:not(:hover):before {
+    content: "\f111";
 }
 
 .lm-TabBar-tab:hover:not(.lm-mod-current) {
@@ -22,15 +30,10 @@
 }
 
 .lm-TabBar-tab.lm-mod-current {
-    background-color: darken(@color-dark, 10%);
+    background-color: lighten(@color-dark, 10%);
     min-height: @active-tab-height;
     max-height: @active-tab-height;
     line-height: @active-tab-height;
-}
-
-.p-TabBar-tab,
-.lm-TabBar-tab {
-    border: 1px solid @color-dark;
 }
 
 .p-TabBar-content,

@@ -101,6 +101,7 @@ class FileSystemMock extends EventEmitter implements FileSystem {
 
     writeFile(node: FileTreeNode, data: string): void {
         console.log("Write file", node.path, data);
+        this.emit("writeFile", node);
     }
 }
 
