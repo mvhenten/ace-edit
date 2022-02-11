@@ -22,7 +22,11 @@ const config = {
           "css-loader",
           "less-loader",
         ],
-      }        
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf)$/i,
+        type: 'asset/resource'
+      },
     ]
   },
   resolve: {
