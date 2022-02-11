@@ -12,7 +12,10 @@ export const NoFileTree = (props: {
     if (props.fileTree.nodes.length) return null;
 
     return (
-        <div className="padding-1 flex col between">
+        <div
+            style={{ minWidth: "200px" }}
+            className="padding-1 flex col between"
+        >
             <p>You have not added a folder to the workspace yet.</p>
             <button
                 onClick={props.onOpenFile}

@@ -26,6 +26,11 @@ export class BoxResizable extends HTMLElement {
             background-color: var(--grip-background-color, #aaa);
         }
 
+        :host .grippy:hover {
+            width: var(--grip-width, 3px);
+            background-color: var(--grip-hover-color, #aaa);
+        }
+
         :host .resizable {
             overflow:hidden;
             display: flex;

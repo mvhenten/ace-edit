@@ -66,6 +66,18 @@
 
     .text-@{name} {
         color: @color;
+
+        &.fade {
+            color: fade(@color, 50%);
+        }
+
+        &.lighten {
+            color: lighten(@color, 20%);
+        }
+
+        &.darken {
+            color: darken(@color, 10%);
+        }
     }
 
     .color( @names, @index - 1 );

@@ -13,6 +13,7 @@ import { AceEditorManager } from "../ace-editor/interfaces";
 import { preferenceData } from "../preferences";
 import { PreferencesPanel } from "./preferences-panel";
 import { TabManager } from "../tab-manager/interfaces";
+import { WelcomePage } from "./welcome";
 
 // Types for props
 type AppProps = {
@@ -101,11 +102,11 @@ class App extends Component<AppProps, AppState> {
                                 className="solid dark darken button"
                                 onClick={onFileTreeToggle}
                             >
-                                Filetree
+                                filesystem
                             </div>
                         </div>
                         <box-resizable
-                            width={300}
+                            width={280}
                             value={this.state.leftPaneCollapsed}
                             data-collapsed={this.state.leftPaneCollapsed}
                         >
@@ -132,7 +133,9 @@ class App extends Component<AppProps, AppState> {
                     <div
                         className="slot-editor darken darken dark"
                         ref={this.editorRef}
-                    />
+                    >
+                        <WelcomePage fileTree={this.state.fileTree} />
+                    </div>
                     <div className="slot-preferences">
                         <box-resizable
                             data-resizeDirection="left"
@@ -155,7 +158,7 @@ class App extends Component<AppProps, AppState> {
                                 className="solid dark darken button"
                                 onClick={onPreferencesToggle}
                             >
-                                Preferences
+                                preferences
                             </div>
                         </div>
                     </div>
