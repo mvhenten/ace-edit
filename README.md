@@ -7,7 +7,7 @@ We provide the features of ACE combined with a powerful editing interface.
 ## Getting started
 
 ```
-git clone ace-edit
+git clone https://github.com/mvhenten/ace-edit.git
 cd ace-edit
 npm install
 npm run server
